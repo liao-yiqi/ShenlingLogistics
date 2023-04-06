@@ -3,7 +3,9 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">
+          <img src="@/assets/images/logo.png" class="imglogo">
+        </h3>
       </div>
 
       <el-form-item prop="username">
@@ -47,8 +49,10 @@
         <span style="margin-right:20px;">username: admin</span>
         <span> password: any</span>
       </div>
-
     </el-form>
+    <video autoplay muted loop>
+      <source src="../login/video/bgVideo.mp4">
+    </video>
   </div>
 </template>
 
@@ -178,18 +182,32 @@ $dark_gray:#889aa4;
 $light_gray:#eee;
 
 .login-container {
+  video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+.imglogo {
+  height: 54px;
+}
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  // background-color: $bg;
   overflow: hidden;
-
   .login-form {
-    position: relative;
-    width: 520px;
-    max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
-    overflow: hidden;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    margin: -180px 0 0 -160px;
+    width: 450px;
+    height: 467px;
+    padding: 36px 40px;
+    background: #fff;
+    border-radius: 10px;
   }
 
   .tips {
