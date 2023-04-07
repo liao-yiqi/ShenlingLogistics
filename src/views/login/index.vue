@@ -59,6 +59,7 @@
           tabindex="1"
           auto-complete="off"
         />
+        <img src="" class="codeImg">
       </el-form-item>
 
       <el-button class="loginBtn" :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
@@ -212,7 +213,12 @@ $light_gray:#eee;
     /* 输入框样式 */
 .formStyle {
   background-color: $bg;
-  border: #989191 solid 1px;
+  display: inline-block;
+  width: 100%;
+  height: 50px;
+  padding: 0 15px;
+  line-height: 40px;
+  border: #dedfe6 solid 1px;
 }
 /* 密码输入框icon样式 */
 .passwordIcon {
@@ -250,7 +256,18 @@ $light_gray:#eee;
     border-radius: 10px;
     background-color: $bg;
   }
-
+  /* 验证码样式 */
+  .codeImg {
+    width: 71px;
+    height: 32px;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 10px;
+    position: absolute;
+    right: -1px;
+    top: 9px;
+    background-color: #e84040;
+  }
   .svg-container {
     padding: 6px 5px 6px 15px;
     color: #989191;
