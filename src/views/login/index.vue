@@ -52,14 +52,14 @@
         </span>
         <el-input
           ref="username"
-          v-model="loginForm.username"
+          v-model="loginForm.code"
           placeholder="验证码"
           name="code"
           type="text"
           tabindex="1"
           auto-complete="off"
         />
-        <img src="" class="codeImg">
+        <img :src="imgUrl" class="codeImg" @click="upCode">
       </el-form-item>
 
       <el-button class="loginBtn" :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
@@ -81,13 +81,22 @@
 </template>
 
 <script>
-
+import { getLoginCode } from '@/api/user'
 export default {
   data() {
     return {
+      // 图片路径
+      imgUrl: '',
+      // 验证码参数
+      params: {
+        key: ''
+      },
+      // 登录表单
       loginForm: {
-        username: '',
-        password: ''
+        username: 'shenlingadmin',
+        password: '123456',
+        code: '',
+        key: ''
       },
       loginRules: {
         username: [{ required: true, message: '请填写此字段', trigger: 'blur' }],
@@ -97,6 +106,13 @@ export default {
       passwordType: 'password',
       redirect: undefined
     }
+  },
+
+  created() {
+    // 调用验证码
+    this.getCaptcha()
+    // 调用随机key函数
+    this.randomKey()
   },
 
   methods: {
@@ -110,8 +126,33 @@ export default {
       this.$nextTick(() => {
         this.$refs.password.focus()
       })
+    },
+    // 获取验证码
+    async getCaptcha() {
+      const res = await getLoginCode(this.params)
+      console.log(res)
+      // 转化数据类型
+      const blob = new Blob([res.data])
+      // 将转化好的数据转化为路径
+      const url = window.URL.createObjectURL(blob)
+      // 设置到img里面
+      this.imgUrl = url
+    },
+    // 更新验证码
+    upCode() {
+      this.getCaptcha()
+    },
+    // 生成随机数
+    getRandom(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min
+    },
+    // 使用随机数来生成key
+    randomKey() {
+      this.params.key = this.getRandom(0, 9)
+      console.log(this.params.key)
     }
   }
+
 }
 </script>
 
@@ -266,7 +307,6 @@ $light_gray:#eee;
     position: absolute;
     right: -1px;
     top: 9px;
-    background-color: #e84040;
   }
   .svg-container {
     padding: 6px 5px 6px 15px;

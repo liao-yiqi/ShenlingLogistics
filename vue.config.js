@@ -39,7 +39,7 @@ module.exports = {
     /* 解决跨域问题 */
     proxy: {
       '/api': {
-        target: 'https://slwl-api.itheima.net',
+        target: 'https://slwl-api.itheima.net/manager',
         changeOrigin: true
       }
     }

@@ -13,8 +13,10 @@ export function logout() {
 }
 
 // 获取验证码
-export function getLoginCode() {
+export function getLoginCode(params) {
   return request({
-    url: '/manager/captcha'
+    url: '/captcha',
+    params,
+    responseType: 'blob'
   })
 }
