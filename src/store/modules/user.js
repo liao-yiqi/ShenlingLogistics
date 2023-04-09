@@ -15,10 +15,13 @@ export default {
     }
   },
   actions: {
-    // 发送登录请求
     async login(context, data) {
+      // 发送登录请求
       const res = await login(data)
-      context.commit('setToken', res)
+      // 判断是否成功
+      if (res.data.code === 200) {
+        context.commit('setToken', res.data.data)
+      }
     },
     // 退出
     logout(context) {

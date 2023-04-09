@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import { getLoginCode, login } from '@/api/user'
+import { getLoginCode } from '@/api/user'
 export default {
   data() {
     return {
@@ -167,8 +167,16 @@ export default {
     },
     // 登录按钮
     async loginBtn() {
-      // 登录
-      await login(this.loginForm)
+      // 表单校验
+      await this.$refs.loginForm.validate()
+      // 调用action来发送登录请求
+      this.$store.dispatch('user/login', this.loginForm)
+      // 提示用户
+      this.$message.success('登录成功')
+      // 跳转页面
+      setTimeout(() => {
+        this.$router.push('/')
+      }, 1500)
     }
   }
 
