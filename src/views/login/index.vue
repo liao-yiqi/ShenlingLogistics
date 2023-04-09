@@ -168,9 +168,7 @@ export default {
     // 登录按钮
     async loginBtn() {
       // 登录
-      const res = await login(this.loginForm)
-      console.log(res)
-      console.log(this.loginForm)
+      await login(this.loginForm)
     }
   }
 
