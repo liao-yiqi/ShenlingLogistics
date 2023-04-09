@@ -8,15 +8,15 @@
         </h3>
       </div>
       <!-- 用户名 -->
-      <el-form-item prop="username" class="formStyle">
+      <el-form-item prop="account" class="formStyle">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
+          ref="account"
+          v-model="loginForm.account"
           placeholder="用户名"
-          name="username"
+          name="account"
           type="text"
           tabindex="1"
           auto-complete="off"
@@ -37,7 +37,7 @@
           name="password"
           tabindex="2"
           auto-complete="off"
-          @keyup.enter.native="handleLogin"
+          @keyup.enter.native="loginBtn"
         />
         <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" class="passwordIcon" />
@@ -45,13 +45,13 @@
       </el-form-item>
 
       <!-- 验证码 -->
-      <el-form-item prop="username" class="formStyle">
+      <el-form-item prop="code" class="formStyle">
         <span class="svg-container">
           <!-- <svg-icon icon-class="user" /> -->
           <i class="el-icon-mobile-phone codeIcon" />
         </span>
         <el-input
-          ref="username"
+          ref="code"
           v-model="loginForm.code"
           placeholder="验证码"
           name="code"
@@ -62,7 +62,13 @@
         <img :src="imgUrl" class="codeImg" @click="upCode">
       </el-form-item>
 
-      <el-button class="loginBtn" :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button
+        class="loginBtn"
+        :loading="loading"
+        type="primary"
+        style="width:100%;margin-bottom:30px;"
+        @click.native.prevent="loginBtn"
+      >登录</el-button>
 
     </el-form>
     <!-- 底部文字部分 -->
@@ -81,7 +87,7 @@
 </template>
 
 <script>
-import { getLoginCode } from '@/api/user'
+import { getLoginCode, login } from '@/api/user'
 export default {
   data() {
     return {
@@ -93,14 +99,22 @@ export default {
       },
       // 登录表单
       loginForm: {
-        username: 'shenlingadmin',
+        account: 'shenlingadmin',
         password: '123456',
         code: '',
-        key: ''
+        key: '',
+        bindAccount: '',
+        bindPassword: '',
+        signAccount: '',
+        signPassword: ''
       },
       loginRules: {
-        username: [{ required: true, message: '请填写此字段', trigger: 'blur' }],
-        password: [{ required: true, message: '请填写此字段', trigger: 'blur' }]
+        account: [{ required: true, message: '请填写此字段', trigger: 'blur' }],
+        password: [{ required: true, message: '请填写此字段', trigger: 'blur' }],
+        code: [
+          { required: true, message: '请填写验证码', trigger: 'blur' },
+          { min: 1, max: 2, message: '验证码长度为1~2位', trigger: 'blur' }
+        ]
       },
       loading: false,
       passwordType: 'password',
@@ -108,11 +122,11 @@ export default {
     }
   },
 
-  created() {
-    // 调用验证码
-    this.getCaptcha()
+  async created() {
     // 调用随机key函数
     this.randomKey()
+    // 调用验证码
+    this.getCaptcha()
   },
 
   methods: {
@@ -130,7 +144,6 @@ export default {
     // 获取验证码
     async getCaptcha() {
       const res = await getLoginCode(this.params)
-      console.log(res)
       // 转化数据类型
       const blob = new Blob([res.data])
       // 将转化好的数据转化为路径
@@ -149,7 +162,15 @@ export default {
     // 使用随机数来生成key
     randomKey() {
       this.params.key = this.getRandom(0, 9)
-      console.log(this.params.key)
+      // 使登录表单的key等于验证码的key
+      this.loginForm.key = this.params.key
+    },
+    // 登录按钮
+    async loginBtn() {
+      // 登录
+      const res = await login(this.loginForm)
+      console.log(res)
+      console.log(this.loginForm)
     }
   }
 
