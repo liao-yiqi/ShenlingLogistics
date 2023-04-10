@@ -20,7 +20,7 @@ export default {
       const res = await login(data)
       // 判断是否成功
       if (res.data.code === 200) {
-        context.commit('setToken', res.data.data)
+        context.commit('setToken', res.data.data.token.token)
       }
     },
     // 退出
