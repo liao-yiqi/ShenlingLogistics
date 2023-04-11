@@ -49,113 +49,155 @@ export const constantRoutes = [
     redirect: '/dashboard',
     children: [{
       path: 'dashboard',
-      name: 'Dashboard',
+      name: '工作台',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '工作台', icon: 'dashboard' }
     }]
   },
 
   {
-    path: '/example',
+    path: '/basicDataManagement',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
+    // redirect: '/example/table',
+    name: '基础数据管理',
+    meta: { title: '基础数据管理', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        path: 'basicDataManagement/orgManagement',
+        name: '机构管理',
+        component: () => import('@/views/basicDataManagement/orgManagement/index'),
+        meta: { title: '机构管理', icon: 'table' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        path: 'basicDataManagement/oroMechanism',
+        name: '机构作业范围',
+        component: () => import('@/views/basicDataManagement/oroMechanism/index'),
+        meta: { title: '机构作业范围', icon: 'tree' }
+      },
+      {
+        path: 'basicDataManagement/freightManagement',
+        name: '运费管理',
+        component: () => import('@/views/basicDataManagement/freightManagement/index'),
+        meta: { title: '运费管理', icon: 'tree' }
       }
     ]
   },
 
   {
-    path: '/form',
+    path: '/vehicleManagement',
     component: Layout,
+    // redirect: '/example/table',
+    name: '车辆管理',
+    meta: { title: '车辆管理', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        path: 'vehicleManagement/vehicleTypeManagement',
+        name: '车型管理',
+        component: () => import('@/views/vehicleManagement/vehicleTypeManagement/index'),
+        meta: { title: '车型管理', icon: 'form' }
+      },
+      {
+        path: 'vehicleManagement/vehicleList',
+        name: '车辆列表',
+        component: () => import('@/views/vehicleManagement/vehicleList/index'),
+        meta: { title: '车辆列表', icon: 'form' }
+      },
+      {
+        path: 'vehicleManagement/vehicleRegister',
+        name: '回车登记',
+        component: () => import('@/views/vehicleManagement/vehicleRegister/index'),
+        meta: { title: '回车登记', icon: 'form' }
       }
     ]
   },
 
   {
-    path: '/nested',
+    path: '/employeeManagement',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
+    // redirect: '/nested/menu1',
+    name: '员工管理',
     meta: {
-      title: 'Nested',
+      title: '员工管理',
       icon: 'nested'
     },
     children: [
       {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
+        path: 'employeeManagement/courierManagement',
+        component: () => import('@/views/employeeManagement/courierManagement/index'), // Parent router-view
+        name: '快递员管理',
+        meta: { title: '快递员管理', icon: 'form' }
       },
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
+        path: 'employeeManagement/driverManagement',
+        component: () => import('@/views/employeeManagement/driverManagement/index'),
+        name: '司机管理',
+        meta: { title: '司机管理', icon: 'form' }
+      },
+      {
+        path: 'employeeManagement/schedulingManagement',
+        component: () => import('@/views/employeeManagement/schedulingManagement/index'),
+        name: '排班管理',
+        meta: { title: '排班管理', icon: 'form' }
       }
     ]
   },
-
   {
-    path: 'external-link',
+    path: '/serviceManagement',
     component: Layout,
+    // redirect: '/nested/menu1',
+    name: '业务管理',
+    meta: {
+      title: '业务管理',
+      icon: 'nested'
+    },
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+        path: 'serviceManagement/orderManagement',
+        component: () => import('@/views/serviceManagement/orderManagement/index'),
+        name: '订单管理',
+        meta: { title: '订单管理', icon: 'form' }
+      },
+      {
+        path: 'serviceManagement/waybillManagement',
+        component: () => import('@/views/serviceManagement/waybillManagement/index'),
+        name: '运单管理',
+        meta: { title: '运单管理', icon: 'form' }
+      }
+    ]
+  },
+  {
+    path: '/schedulingManagement',
+    component: Layout,
+    // redirect: '/nested/menu1',
+    name: '调度管理',
+    meta: {
+      title: '调度管理',
+      icon: 'nested'
+    },
+    children: [
+      {
+        path: 'schedulingManagement/transportTaskManagement',
+        component: () => import('@/views/schedulingManagement/transportTaskManagement/index'),
+        name: '运输任务管理',
+        meta: { title: '运输任务管理', icon: 'form' }
+      },
+      {
+        path: 'schedulingManagement/lineManagement',
+        component: () => import('@/views/schedulingManagement/lineManagement/index'),
+        name: '线路管理',
+        meta: { title: '线路管理', icon: 'form' }
+      },
+      {
+        path: 'schedulingManagement/PickUpJobManagement',
+        component: () => import('@/views/schedulingManagement/PickUpJobManagement/index'),
+        name: '取件作业管理',
+        meta: { title: '取件作业管理', icon: 'form' }
+      },
+      {
+        path: 'schedulingManagement/deliveryOperationManagement',
+        component: () => import('@/views/schedulingManagement/deliveryOperationManagement/index'),
+        name: '派件作业管理',
+        meta: { title: '派件作业管理', icon: 'form' }
       }
     ]
   },
