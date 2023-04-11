@@ -22,6 +22,7 @@ export default {
       // 判断是否成功
       if (res.data.code === 200) {
         Message.success('登录成功')
+        localStorage.setItem('time', Date.now())
         context.commit('setToken', res.data.data.token.token)
       }
     },
