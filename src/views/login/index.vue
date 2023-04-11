@@ -172,7 +172,7 @@ export default {
       // 调用action来发送登录请求
       this.$store.dispatch('user/login', this.loginForm)
       // 提示用户
-      this.$message.success('登录成功')
+      // this.$message.success('登录成功')
       // 跳转页面
       setTimeout(() => {
         this.$router.push('/')

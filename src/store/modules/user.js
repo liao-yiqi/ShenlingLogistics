@@ -1,4 +1,5 @@
 import { login } from '@/api/user'
+import { Message } from 'element-ui'
 export default {
   namespaced: true,
   state: {
@@ -20,6 +21,7 @@ export default {
       const res = await login(data)
       // 判断是否成功
       if (res.data.code === 200) {
+        Message.success('登录成功')
         context.commit('setToken', res.data.data.token.token)
       }
     },
