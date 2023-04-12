@@ -194,7 +194,7 @@
 
 <script>
 // 请求接口引入
-import { vehiclePage, getVehicleDetail } from '@/api/vehicle'
+import { vehiclePage, getVehicleDetail, updateVehicleInfo } from '@/api/vehicle'
 // 引入枚举数据
 import vehicle from '@/constant/vehicle'
 export default {
@@ -239,13 +239,14 @@ export default {
       // 发送请求获取车辆数据
       const res = await getVehicleDetail(id)
       this.dialogFrom = res.data.data
-      console.log(this.dialogFrom)
       // 显示弹窗
       this.isShowDialog = true
     },
     // 确认按钮
     async btnOK() {
-      console.log('确认按钮')
+      // console.log('确认按钮')
+      const res = await updateVehicleInfo(this.dialogFrom)
+      console.log(res)
     },
     // 取消按钮
     btnCancel() {

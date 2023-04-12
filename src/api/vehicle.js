@@ -21,3 +21,12 @@ export function getVehicleDetail(id) {
     url: `/truckType/${id}`
   })
 }
+
+// 更新车辆信息
+export function updateVehicleInfo(data) {
+  return request({
+    url: `/truckType/${data.id}`,
+    method: 'put',
+    data
+  })
+}
