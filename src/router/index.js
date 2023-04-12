@@ -58,7 +58,6 @@ export const constantRoutes = [
   {
     path: 'basicDataManagement',
     component: Layout,
-    // redirect: '/example/table',
     name: '基础数据管理',
     meta: { title: '基础数据管理', icon: 'el-icon-s-help' },
     children: [
@@ -86,7 +85,6 @@ export const constantRoutes = [
   {
     path: '/vehicleManagement',
     component: Layout,
-    // redirect: '/example/table',
     name: '车辆管理',
     meta: { title: '车辆管理', icon: 'el-icon-s-help' },
     children: [
@@ -114,7 +112,6 @@ export const constantRoutes = [
   {
     path: '/employeeManagement',
     component: Layout,
-    // redirect: '/nested/menu1',
     name: '员工管理',
     meta: {
       title: '员工管理',
@@ -144,7 +141,6 @@ export const constantRoutes = [
   {
     path: '/serviceManagement',
     component: Layout,
-    // redirect: '/nested/menu1',
     name: '业务管理',
     meta: {
       title: '业务管理',
@@ -168,7 +164,6 @@ export const constantRoutes = [
   {
     path: '/schedulingManagement',
     component: Layout,
-    // redirect: '/nested/menu1',
     name: '调度管理',
     meta: {
       title: '调度管理',
