@@ -5,15 +5,24 @@
 </template>
 
 <script>
-// import { vehicleCount } from '@/api/vehicle'
+import { vehiclePage } from '@/api/vehicle'
 export default {
   data() {
     return {
+      formData: {
+        licensePlate: '',
+        truckTypeId: '',
+        workStatus: ''
+      },
+      params: {
+        page: 1,
+        pageSize: 10
+      }
     }
   },
   async created() {
-    /* const res = await vehicleCount()
-    console.log(res) */
+    const res = await vehiclePage(this.params)
+    console.log(res)
   }
 
 }
