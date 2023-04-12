@@ -20,7 +20,7 @@ service.interceptors.request.use(config => {
       // 阻止继续往下运行
       return Promise.reject('登录超时,请重新登录')
     }
-    config.headers.Authorization = `Bearer ${store.getters.token}`
+    config.headers.Authorization = store.getters.token
   }
   return config
 })
