@@ -10,7 +10,7 @@ export function vehicleCount(data) {
 // 获取车辆分页数据
 export function vehiclePage(params) {
   return request({
-    url: '/truck/page',
+    url: '/truckType/page',
     params
   })
 }
