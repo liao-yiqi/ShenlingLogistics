@@ -14,3 +14,10 @@ export function vehiclePage(params) {
     params
   })
 }
+
+// 获取车辆详情信息
+export function getVehicleDetail(id) {
+  return request({
+    url: `/truckType/${id}`
+  })
+}

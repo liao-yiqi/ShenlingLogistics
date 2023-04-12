@@ -64,7 +64,6 @@
 
       <el-button
         class="loginBtn"
-        :loading="loading"
         type="primary"
         style="width:100%;margin-bottom:30px;"
         @click.native.prevent="loginBtn"
