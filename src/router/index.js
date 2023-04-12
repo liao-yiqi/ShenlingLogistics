@@ -56,26 +56,26 @@ export const constantRoutes = [
   },
 
   {
-    path: '/basicDataManagement',
+    path: 'basicDataManagement',
     component: Layout,
     // redirect: '/example/table',
     name: '基础数据管理',
     meta: { title: '基础数据管理', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'basicDataManagement/orgManagement',
+        path: '/orgManagement',
         name: '机构管理',
         component: () => import('@/views/basicDataManagement/orgManagement/index'),
         meta: { title: '机构管理', icon: 'table' }
       },
       {
-        path: 'basicDataManagement/oroMechanism',
+        path: '/oroMechanism',
         name: '机构作业范围',
         component: () => import('@/views/basicDataManagement/oroMechanism/index'),
         meta: { title: '机构作业范围', icon: 'tree' }
       },
       {
-        path: 'basicDataManagement/freightManagement',
+        path: '/freightManagement',
         name: '运费管理',
         component: () => import('@/views/basicDataManagement/freightManagement/index'),
         meta: { title: '运费管理', icon: 'tree' }
@@ -152,13 +152,13 @@ export const constantRoutes = [
     },
     children: [
       {
-        path: 'serviceManagement/orderManagement',
+        path: '/orderManagement',
         component: () => import('@/views/serviceManagement/orderManagement/index'),
         name: '订单管理',
         meta: { title: '订单管理', icon: 'form' }
       },
       {
-        path: 'serviceManagement/waybillManagement',
+        path: '/waybillManagement',
         component: () => import('@/views/serviceManagement/waybillManagement/index'),
         name: '运单管理',
         meta: { title: '运单管理', icon: 'form' }
@@ -176,25 +176,25 @@ export const constantRoutes = [
     },
     children: [
       {
-        path: 'schedulingManagement/transportTaskManagement',
+        path: '/transportTaskManagement',
         component: () => import('@/views/schedulingManagement/transportTaskManagement/index'),
         name: '运输任务管理',
         meta: { title: '运输任务管理', icon: 'form' }
       },
       {
-        path: 'schedulingManagement/lineManagement',
+        path: '/lineManagement',
         component: () => import('@/views/schedulingManagement/lineManagement/index'),
         name: '线路管理',
         meta: { title: '线路管理', icon: 'form' }
       },
       {
-        path: 'schedulingManagement/PickUpJobManagement',
+        path: '/PickUpJobManagement',
         component: () => import('@/views/schedulingManagement/PickUpJobManagement/index'),
         name: '取件作业管理',
         meta: { title: '取件作业管理', icon: 'form' }
       },
       {
-        path: 'schedulingManagement/deliveryOperationManagement',
+        path: '/deliveryOperationManagement',
         component: () => import('@/views/schedulingManagement/deliveryOperationManagement/index'),
         name: '派件作业管理',
         meta: { title: '派件作业管理', icon: 'form' }

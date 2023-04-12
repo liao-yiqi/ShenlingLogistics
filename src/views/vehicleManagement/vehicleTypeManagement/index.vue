@@ -5,7 +5,16 @@
 </template>
 
 <script>
+// import { vehicleCount } from '@/api/vehicle'
 export default {
+  data() {
+    return {
+    }
+  },
+  async created() {
+    /* const res = await vehicleCount()
+    console.log(res) */
+  }
 
 }
 </script>
