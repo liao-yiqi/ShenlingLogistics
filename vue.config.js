@@ -36,15 +36,17 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    /* 解决跨域问题 */
     proxy: {
       '/api': {
-        target: 'https://slwl-api.itheima.net/manager',
-        changeOrigin: true
+        target: 'https://slwl-geteway.itheima.net',
+        changeOrigin: true,
+        // 路径重写
+        pathRewrite: {
+          '/api': ''
+        }
       }
     }
   },
-
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.

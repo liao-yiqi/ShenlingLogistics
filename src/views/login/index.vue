@@ -59,7 +59,7 @@
           tabindex="1"
           auto-complete="off"
         />
-        <img :src="imgUrl" class="codeImg" @click="upCode">
+        <img :src="CaptchaUrl" class="codeImg" @click="upCode">
       </el-form-item>
 
       <el-button
@@ -91,7 +91,7 @@ export default {
   data() {
     return {
       // 图片路径
-      imgUrl: '',
+      CaptchaUrl: '',
       // 验证码参数
       params: {
         key: ''
@@ -122,8 +122,6 @@ export default {
   },
 
   async created() {
-    // 调用随机key函数
-    this.randomKey()
     // 调用验证码
     this.getCaptcha()
   },
@@ -142,27 +140,18 @@ export default {
     },
     // 获取验证码
     async getCaptcha() {
-      const res = await getLoginCode(this.params)
-      // 转化数据类型
-      const blob = new Blob([res.data])
-      // 将转化好的数据转化为路径
-      const url = window.URL.createObjectURL(blob)
-      // 设置到img里面
-      this.imgUrl = url
+      // 将key等于一个时间戳,能等于一个随机数
+      const key = Date.now()
+      const res = await getLoginCode(key)
+      this.loginForm.key = key
+      const img = btoa(
+        new Uint8Array(res).reduce((data, byte) => data + String.fromCharCode(byte), '')
+      )
+      this.CaptchaUrl = 'data:image/png;base64,' + img
     },
     // 更新验证码
     upCode() {
       this.getCaptcha()
-    },
-    // 生成随机数
-    getRandom(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min
-    },
-    // 使用随机数来生成key
-    randomKey() {
-      this.params.key = this.getRandom(0, 9)
-      // 使登录表单的key等于验证码的key
-      this.loginForm.key = this.params.key
     },
     // 登录按钮
     async loginBtn() {
@@ -170,8 +159,6 @@ export default {
       await this.$refs.loginForm.validate()
       // 调用action来发送登录请求
       this.$store.dispatch('user/login', this.loginForm)
-      // 提示用户
-      // this.$message.success('登录成功')
       // 跳转页面
       setTimeout(() => {
         this.$router.push('/')

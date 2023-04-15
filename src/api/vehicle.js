@@ -10,7 +10,7 @@ export function vehicleCount(data) {
 // 获取车辆分页数据
 export function vehiclePage(params) {
   return request({
-    url: '/truckType/page',
+    url: '/manager/truckType/page',
     params
   })
 }
@@ -18,15 +18,32 @@ export function vehiclePage(params) {
 // 获取车辆详情信息
 export function getVehicleDetail(id) {
   return request({
-    url: `/truckType/${id}`
+    url: `/manager/truckType/${id}`
   })
 }
 
 // 更新车辆信息
 export function updateVehicleInfo(data) {
   return request({
-    url: `/truckType/${data.id}`,
+    url: `/manager/truckType/${data.id}`,
     method: 'put',
+    data
+  })
+}
+
+// 删除车辆类型
+export function deleteVehicle(id) {
+  return request({
+    url: `/manager/truckType/${id}`,
+    method: 'delete'
+  })
+}
+
+// 添加车辆类型
+export function addVehicle(data) {
+  return request({
+    url: `/manager/truckType`,
+    method: 'post',
     data
   })
 }

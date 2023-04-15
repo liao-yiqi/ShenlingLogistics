@@ -2,25 +2,19 @@ import request from '@/utils/request'
 // 登录接口
 export function login(data) {
   return request({
-    url: '/login',
+    url: '/manager/login',
     method: 'post',
     data
   })
 }
 
-export function getInfo(token) {
-
-}
-
-export function logout() {
-
-}
-
 // 获取验证码
-export function getLoginCode(params) {
+export function getLoginCode(key) {
   return request({
-    url: '/captcha',
-    params,
-    responseType: 'blob'
+    url: '/manager/captcha',
+    params: {
+      key
+    },
+    responseType: 'arraybuffer'
   })
 }

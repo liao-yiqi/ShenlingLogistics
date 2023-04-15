@@ -1,36 +1,41 @@
-// 导出一个axios的实例  而且这个实例要有请求拦截器 响应拦截器
+import store from '@/store'
 import axios from 'axios'
 import { Message } from 'element-ui'
-import { Promise } from 'core-js'
-import router from '@/router'
-import store from '@/store'
+import nProgress from 'nprogress'
+// create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // 超时时间
-}) // 创建一个axios的实例
-// 请求拦截器
+  timeout: 5000 // request timeout
+})
+
+nProgress.configure({ showSpinner: false })
+
+// request interceptor
 service.interceptors.request.use(config => {
+  nProgress.start()
   if (store.getters.token) {
-    if (Date.now() - localStorage.getItem('time') > 1000 * 60 * 60) {
-      // 超时后调用退出功能
-      store.dispatch('user/logout')
-      // 返回到登录页
-      router.push('/login')
-      // 阻止继续往下运行
-      return Promise.reject('登录超时,请重新登录')
-    }
-    config.headers.Authorization = store.getters.token
+    config.headers.Authorization = `${store.getters.token}`
   }
   return config
 })
-// 响应拦截器
-service.interceptors.response.use(res => {
-  // 判断验证码是否正确
-  if (res.data.code === 1) {
-    Message.error(res.data.msg)
-  }
-  return res
-})
 
-export default service // 导出axios实例
+// response interceptor
+service.interceptors.response.use(res => {
+  // 收到响应 业务处理---
+  nProgress.done()
+  if ((res.data.msg && res.data.msg === 'ok') || res.headers['content-type'] === 'image/png') {
+    return res.data
+  } else {
+    Message.error(res.data.msg)
+    return Promise.reject(res.data.msg)
+  }
+}, err => {
+  // console.log(err)
+  nProgress.done()
+  Message.error('服务器繁忙，请稍后再试')
+  return Promise.reject(err)
+}
+)
+
+export default service
