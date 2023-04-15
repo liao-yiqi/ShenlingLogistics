@@ -69,7 +69,7 @@
           margin-top: 20px;"
           stripe
         >
-          <el-table-column label="序号" type="index" width="50px" />
+          <el-table-column label="序号" type="index" width="50px" padding-right="10px" />
           <el-table-column label="车型编号" prop="id" width="150px" />
           <el-table-column label="车辆类型" prop="name" width="130px" />
           <el-table-column label="车型数量" prop="num" />
@@ -115,11 +115,14 @@
         <el-row type="flex" justify="center">
           <el-pagination
             style="margin-top: 20px"
-            :page-size="pageConfig.page"
+            :page-sizes="[10, 20, 30, 40]"
+            :page-size="10"
+            layout="total,sizes, prev, pager, next, jumper"
             :total="total"
+            @size-change="handleSizeChange"
+            @current-change="currentChange"
           />
-        </el-row>
-      </el-card>
+        </el-row></el-card>
       <!-- 弹窗 -->
       <el-dialog
         :title="dialogFrom.id?'编辑车型':'新增车型'"
@@ -246,16 +249,35 @@ export default {
   },
   async created() {
     this.dialogData()
-    // console.log(res.data.data.items)
+  },
+  mounted() {
+    const jump = document.getElementsByClassName('el-pagination__jump')[0].childNodes
+    jump[0].nodeValue = '前往'
+    const total = document.getElementsByClassName('el-pagination__total')[0].childNodes
+    total[0].nodeValue = '共'
   },
   methods: {
     // 获取分页数据
     async dialogData() {
       // 获取分页数据
       const res = await getVehiclePages(this.pageConfig)
-      const result = res.data.items
+      const { items, counts, pages } = res.data
+      this.pageConfig.pageSize = parseInt(pages)
+      this.total = parseInt(counts)
       console.log(res)
-      this.truckData = result
+      // console.log(typeof this.total)
+      this.truckData = items
+    },
+    // 切换分页
+    currentChange(newPage) {
+      this.pageConfig.page = newPage
+      this.dialogData()
+    },
+    // 页面条数下拉框
+    handleSizeChange(newPagesize) {
+      console.log(`每页 ${newPagesize} 条`)
+      this.pageConfig.pageSize = newPagesize
+      this.dialogData()
     },
     // 编辑按钮
     async editBtn(id) {
@@ -313,8 +335,8 @@ export default {
 }
 
 </style>
-// 弹窗样式
-<style>
+
+<style lang="scss">
 .dialog {
 border-radius: 10px;
 width: 600px;
@@ -329,5 +351,13 @@ border-radius: 10px;
   padding: 0 15px;
   width: 100%;
   border-radius: 5px;
+}
+.el-table_1_column_1 {
+  .cell {
+    font-size: 14px;
+  }
+}
+.customer-list-box .table-card-box .el-card__body {
+    padding: 28px 28px 28px 28px;
 }
 </style>
