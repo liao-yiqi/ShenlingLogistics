@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 // 获取车辆类型分页数据
-export function getTrucktypePages(params) {
+export function getVehiclePages(params) {
   return request({
     url: `/manager/truckType/page`,
     params
@@ -15,15 +15,15 @@ export function getTrucktypeList() {
   })
 }
 
-// 获取车辆类型详情 用于数据回显
-export function getTrucktypeDetails(id) {
+// 获取车辆类型详情
+export function getVehicleDetails(id) {
   return request({
     url: `/manager/truckType/${id}`
   })
 }
 
 // 添加车辆类型
-export function addTrucktype(data) {
+export function addVehicle(data) {
   return request({
     url: `/manager/truckType`,
     method: 'post',
@@ -32,7 +32,7 @@ export function addTrucktype(data) {
 }
 
 // 更新车辆信息
-export function updateTrucktypeDetails(data) {
+export function updateVehicleDetails(data) {
   return request({
     url: `/manager/truckType/${data.id}`,
     method: 'put',

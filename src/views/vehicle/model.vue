@@ -194,7 +194,7 @@
 
 <script>
 // 请求接口引入
-import { getTrucktypePages, getTrucktypeDetails, updateTrucktypeDetails, addTrucktype } from '@/api/modules/vehicle/model'
+import { getVehiclePages, getVehicleDetails, updateVehicleDetails, addVehicle } from '@/api/modules/vehicle/model'
 // 引入枚举数据
 import vehicle from '@/constant/vehicle'
 export default {
@@ -252,7 +252,7 @@ export default {
     // 获取分页数据
     async dialogData() {
       // 获取分页数据
-      const res = await getTrucktypePages(this.pageConfig)
+      const res = await getVehiclePages(this.pageConfig)
       const result = res.data.items
       console.log(res)
       this.truckData = result
@@ -260,14 +260,14 @@ export default {
     // 编辑按钮
     async editBtn(id) {
       // 发送请求获取车辆数据
-      const res = await getTrucktypeDetails(id)
+      const res = await getVehicleDetails(id)
       this.dialogFrom = res.data
       // 显示弹窗
       this.isShowDialog = true
     },
     // 确认按钮
     async btnOK() {
-      /* const res = await updateTrucktypeDetails({
+      /* const res = await updateVehicleDetails({
         ...this.dialogFrom,
         ...this.list
       }) */
@@ -276,10 +276,10 @@ export default {
         ...this.list
       })
       // console.log(res)
-      this.formData.id ? await updateTrucktypeDetails({
+      this.formData.id ? await updateVehicleDetails({
         ...this.dialogFrom,
         ...this.list
-      }) : await addTrucktype({
+      }) : await addVehicle({
         ...this.dialogFrom,
         ...this.list
       })

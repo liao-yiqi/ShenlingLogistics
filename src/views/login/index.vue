@@ -40,7 +40,7 @@
           placeholder="密码"
           name="password"
           tabindex="2"
-          auto-complete="on"
+          auto-complete="off"
           @keyup.enter.native="handleLogin"
         />
         <span class="show-pwd" @click="showPwd">
@@ -59,7 +59,8 @@
           placeholder="验证码"
           name="code"
           tabindex="2"
-          auto-complete="on"
+          auto-complete="off"
+          :maxlength="2"
           @keyup.enter.native="handleLogin"
         />
         <span @click="getCode">
@@ -85,7 +86,7 @@
       style="width: 100%; height: 100%; object-fit: fill;"
     />
     <div class="footer">
-      黑马程序员神领物流开发小组 版权所有Copyright 2023-2033 All Rights Reserved 苏ICP备16007882号-11
+      江苏传智播客教育科技股份有限公司 版权所有Copyright 2023-2033 All Rights Reserved 苏ICP备16007882号-11
     </div>
   </div>
 </template>
@@ -148,17 +149,11 @@ export default {
       })
     },
     // 登录
-    handleLogin() {
-      this.$refs.loginForm.validate(async(vaild) => {
-        if (vaild) {
-          // 异步请求
-          await this.$store.dispatch('user/login', this.loginForm)
-          this.$message.success('登录成功')
-          this.$router.push('/')
-        } else {
-          return false
-        }
-      })
+    async  handleLogin() {
+      await this.$refs.loginForm.validate()
+      await this.$store.dispatch('user/login', this.loginForm)
+      this.$message.success('登录成功')
+      this.$router.push('/')
     },
     // 获取验证码
     async getCode() {
@@ -200,7 +195,7 @@ $cursor: #000;
 
     input {
       background: transparent;
-      -webkit-appearance: none;
+      // -webkit-appearance: none;
       border-radius: 5px;
       padding: 12px 5px 12px 31px;
       color: $light_gray;

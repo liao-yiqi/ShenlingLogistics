@@ -33,7 +33,6 @@ const actions = {
   // 登录
   async login(context, payload) {
     const res = await login(payload)
-    console.log(res)
     context.commit('setToken', res.data.token.token)
     context.commit('setUserInfo', res.data.user)
     localStorage.setItem('time', Date.now())
