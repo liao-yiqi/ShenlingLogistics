@@ -6,194 +6,26 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 
-/**
- * Note: sub-menu only appear when route children.length >= 1
- * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
- *
- * hidden: true                   if set true, item will not show in the sidebar(default is false)
- * alwaysShow: true               if set true, will always show the root menu
- *                                if not set alwaysShow, when item has more than one children route,
- *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
- * name:'router-name'             the name is used by <keep-alive> (must set!!!)
- * meta : {
-    roles: ['admin','editor']    control the page roles (you can set multiple roles)
-    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
-    icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
-    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
-    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
-  }
- */
-
-/**
- * constantRoutes
- * a base page that does not have permission requirements
- * all roles can be accessed
- */
+// 路由规则
 export const constantRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
   },
-
   {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
-  },
-
-  {
-    path: '/',
-    component: Layout,
+    path: '/', // 路径
+    component: Layout, // 组件
+    // 配置二级路的路由表
     redirect: '/dashboard',
     children: [{
-      path: 'dashboard',
-      name: '工作台',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: '工作台', icon: 'dashboard' }
-    }]
-  },
-
-  {
-    path: 'basicDataManagement',
-    component: Layout,
-    name: '基础数据管理',
-    meta: { title: '基础数据管理', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: '/orgManagement',
-        name: '机构管理',
-        component: () => import('@/views/basicDataManagement/orgManagement/index'),
-        meta: { title: '机构管理', icon: 'table' }
-      },
-      {
-        path: '/oroMechanism',
-        name: '机构作业范围',
-        component: () => import('@/views/basicDataManagement/oroMechanism/index'),
-        meta: { title: '机构作业范围', icon: 'tree' }
-      },
-      {
-        path: '/freightManagement',
-        name: '运费管理',
-        component: () => import('@/views/basicDataManagement/freightManagement/index'),
-        meta: { title: '运费管理', icon: 'tree' }
+      path: 'dashboard', // 当前二级路由的默认路由
+      component: () => import('@/views/workbench/dashboard'),
+      meta: {
+        title: '工作台', // 显示菜单名称
+        icon: 'home' // 显示icon
       }
-    ]
-  },
-
-  {
-    path: '/vehicleManagement',
-    component: Layout,
-    name: '车辆管理',
-    meta: { title: '车辆管理', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'vehicleManagement/vehicleTypeManagement',
-        name: '车型管理',
-        component: () => import('@/views/vehicleManagement/vehicleTypeManagement/index'),
-        meta: { title: '车型管理', icon: 'form' }
-      },
-      {
-        path: 'vehicleManagement/vehicleList',
-        name: '车辆列表',
-        component: () => import('@/views/vehicleManagement/vehicleList/index'),
-        meta: { title: '车辆列表', icon: 'form' }
-      },
-      {
-        path: 'vehicleManagement/vehicleRegister',
-        name: '回车登记',
-        component: () => import('@/views/vehicleManagement/vehicleRegister/index'),
-        meta: { title: '回车登记', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/employeeManagement',
-    component: Layout,
-    name: '员工管理',
-    meta: {
-      title: '员工管理',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'employeeManagement/courierManagement',
-        component: () => import('@/views/employeeManagement/courierManagement/index'), // Parent router-view
-        name: '快递员管理',
-        meta: { title: '快递员管理', icon: 'form' }
-      },
-      {
-        path: 'employeeManagement/driverManagement',
-        component: () => import('@/views/employeeManagement/driverManagement/index'),
-        name: '司机管理',
-        meta: { title: '司机管理', icon: 'form' }
-      },
-      {
-        path: 'employeeManagement/schedulingManagement',
-        component: () => import('@/views/employeeManagement/schedulingManagement/index'),
-        name: '排班管理',
-        meta: { title: '排班管理', icon: 'form' }
-      }
-    ]
-  },
-  {
-    path: '/serviceManagement',
-    component: Layout,
-    name: '业务管理',
-    meta: {
-      title: '业务管理',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: '/orderManagement',
-        component: () => import('@/views/serviceManagement/orderManagement/index'),
-        name: '订单管理',
-        meta: { title: '订单管理', icon: 'form' }
-      },
-      {
-        path: '/waybillManagement',
-        component: () => import('@/views/serviceManagement/waybillManagement/index'),
-        name: '运单管理',
-        meta: { title: '运单管理', icon: 'form' }
-      }
-    ]
-  },
-  {
-    path: '/schedulingManagement',
-    component: Layout,
-    name: '调度管理',
-    meta: {
-      title: '调度管理',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: '/transportTaskManagement',
-        component: () => import('@/views/schedulingManagement/transportTaskManagement/index'),
-        name: '运输任务管理',
-        meta: { title: '运输任务管理', icon: 'form' }
-      },
-      {
-        path: '/lineManagement',
-        component: () => import('@/views/schedulingManagement/lineManagement/index'),
-        name: '线路管理',
-        meta: { title: '线路管理', icon: 'form' }
-      },
-      {
-        path: '/PickUpJobManagement',
-        component: () => import('@/views/schedulingManagement/PickUpJobManagement/index'),
-        name: '取件作业管理',
-        meta: { title: '取件作业管理', icon: 'form' }
-      },
-      {
-        path: '/deliveryOperationManagement',
-        component: () => import('@/views/schedulingManagement/deliveryOperationManagement/index'),
-        name: '派件作业管理',
-        meta: { title: '派件作业管理', icon: 'form' }
-      }
+    }
     ]
   },
 
@@ -201,10 +33,24 @@ export const constantRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
+import basicdataRouter from './modules/basicdata/index'
+import vehicleRouter from './modules/vehicle/index'
+import employeeRouter from './modules/employee/index'
+import businessRouter from './modules/business/index'
+import schedulingRouter from './modules/scheduling/index'
+
+export const asyncRoutes = [
+  basicdataRouter,
+  vehicleRouter,
+  employeeRouter,
+  businessRouter,
+  schedulingRouter
+]
+
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  routes: [...constantRoutes, ...asyncRoutes]
 })
 
 const router = createRouter()

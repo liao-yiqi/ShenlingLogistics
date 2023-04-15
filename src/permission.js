@@ -1,25 +1,34 @@
 import router from '@/router'
 import store from '@/store'
+import nProgress from 'nprogress'
 
-// 路由导航守卫
-router.beforeEach((to, from, next) => {
-  // 判断是否有token
-  if (store.getters.token) {
-    // 如果已登录
+router.beforeEach(async(to, from, next) => {
+  // 开启进度条加载
+  nProgress.start()
+  // 已登录
+  if (store.state.user.token) {
+    // 还是登录页
     if (to.path === '/login') {
-      // 不能去登录页,强制回到首页
+      // 强制跳转首页
       next('/')
     } else {
+      // 其他情况 放行
       next()
     }
   } else {
-    // 未登录
-    const whiteLIst = ['/login', '/404']// 白名单
-    if (whiteLIst.includes(to.path)) {
-      // 白名单可以随便进
+    // 未登录 白名单
+    const whiteList = ['/login', '/404']
+    if (whiteList.includes(to.path)) {
+      // 存在白名单中放行
       next()
     } else {
+      // 否则跳去登录页
       next('/login')
     }
   }
+})
+
+router.afterEach(config => {
+  // 关闭进度条加载
+  nProgress.done()
 })

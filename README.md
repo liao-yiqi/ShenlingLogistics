@@ -1,99 +1,136 @@
-# vue-admin-template
+# 神领物流后台管理系统
 
-English | [简体中文](./README-zh.md)
+神领物流后台管理系统旨在为物流运营管理提供全面的解决方案。该项目包括多个模块，每个模块都有自己的需求和职责。
 
-> A minimal vue admin template with Element UI & axios & iconfont & permission control & lint
+## 项目需求
 
-**Live demo:** http://panjiachen.github.io/vue-admin-template
+项目需求分为多个模块，每个模块都有自己的任务和责任。具体要求如下：
 
+1. **完成首页模块，按需完成。地图可暂时不做，但整个布局必须完成。**
 
-**The current version is `v4.0+` build on `vue-cli`. If you want to use the old version , you can switch branch to [tag/3.11.0](https://github.com/PanJiaChen/vue-admin-template/tree/tag/3.11.0), it does not rely on `vue-cli`**
+   1.完成机构概述、今日数据、待办任务、执行中任务的概览。
 
-<p align="center">
-  <b>SPONSORED BY</b>
-</p>
-<p align="center">
-   <a href="https://finclip.com?from=vue_element" title="FinClip" target="_blank">
-      <img height="200px" src="https://gitee.com/panjiachen/gitee-cdn/raw/master/vue%E8%B5%9E%E5%8A%A9.png" title="FinClip">
-   </a>
-</p>
+   2.完成工作台的常用功能链接，具体看路由，能实现跳转到具体页面就行。
 
-## Build Setup
+   3.线路管理的地图可以不用做，但是得用布局占个位置
 
-```bash
-# clone the project
-git clone https://github.com/PanJiaChen/vue-admin-template.git
+   4.完成运输任务，动画效果可参照在线地址。
 
-# enter the project directory
-cd vue-admin-template
+   5.完成订单总量图和订单分布图，可参照在线地址
 
-# install dependency
-npm install
+2. **完成基础数据管理模块。必做：运费管理子模块。**
 
-# develop
-npm run dev
+   1.运费管理管理模块做到增删查改。
+
+   2.机构管理模块和机构作业范围作为选做项。
+
+3. **完成车辆管理模块。必做：车型管理子模块。**
+
+   1.车型管理模块，实现增删查改功能。
+
+   2.车型管理模块，实现模糊搜索和重置功能。
+
+   3.其他子模块作为可选项。
+
+4. **完成员工管理模块。必做：排班管理子模块。**
+
+   1.排班模块，实现渲染效果
+
+   2.排班模块，实现模糊搜索和重置功能。
+
+   3.实现排班设置，和批量绑定排班功能
+
+   4.点击排班设置进入到workArrange-setting页面当中
+
+   5.实现工作模式的列表的增删查改。
+
+   6.实现退回效果（点击返回跳转到排班管理页面）
+
+   7.其他子模块业务作为可选项
+
+5. **完成整个业务管理模块，选一个做。**
+
+6. **完成调度管理中的线路管理子模块，选一个做。**
+
+## 任务分配
+
+项目的任务分配如下：
+
+- 杨辉负责首页模块，具体看第1条。
+- 戚耀华负责基础数据模块，具体看第2条。
+- 黄曼怡负责车辆管理模块，具体看第3条。
+- 陈志豪负责员工管理模块，具体看第4条。
+- 梁伟远负责业务管理模块，具体看第5条。
+
+项目基本结构已经搭建好了，登录/登出功能也已完成，token也已处理，请求API已封装好。各个人负责各自的模块，有能力的可全部做完。不要求一天全部写完。
+
+## 在线地址
+
+项目的在线地址为：https://slwl-admin.itheima.net/#/login
+
+## 项目git仓库
+
+项目的git仓库地址为：https://gitee.com/god-of-place/shenlingwuliu-leaders.git
+
+## 项目资料
+
+项目资料可在以下链接查看：https://www.yuque.com/liufusong/project/link?spm=wolai.workspace.0.0.5954504dMboFgT
+
+## 项目架构
+
+```gas
+├── public                     # 静态资源
+│   │── favicon.ico            # favicon图标
+│   └── index.html             # html模板
+├── src                        # 源代码
+│   ├── api                    # 所有请求
+│   ├── assets                 # 主题 字体等静态资源
+│   ├── components             # 全局公用组件
+│   ├── icons                  # 项目所有 svg icons
+│   ├── layout                 # 全局 layout
+│   ├── router                 # 路由
+│   ├── store                  # 全局 store管理
+│   ├── styles                 # 全局样式
+│   ├── utils                  # 全局公用方法
+│   ├── views                  # views 所有页面
+│   ├── App.vue                # 入口页面
+│   ├── main.js                # 入口文件 加载组件 初始化等
+│   └── permission.js          # 权限管理
+│   └── settings.js            # 配置文件
+├── .env.xxx                   # 环境变量配置
+├── .eslintrc.js               # eslint 配置项
+├── vue.config.js              # vue-cli 配置
+└── package.json               # package.json
 ```
 
-This will automatically open http://localhost:9528
 
-## Build
 
-```bash
-# build for test environment
-npm run build:stage
+## 项目启动
 
-# build for production environment
-npm run build:prod
-```
-
-## Advanced
+#### 克隆远程仓库
 
 ```bash
-# preview the release environment effect
-npm run preview
-
-# preview the release environment effect + static resource analysis
-npm run preview -- --report
-
-# code format check
-npm run lint
-
-# code format check and auto fix
-npm run lint -- --fix
+ git clone https://gitee.com/god-of-place/shenlingwuliu-groups.git 神领物流开发（组内）
 ```
 
-Refer to [Documentation](https://panjiachen.github.io/vue-element-admin-site/guide/essentials/deploy.html) for more information
+#### 切换开发分支
 
-## Demo
+```bash
+git checkout feat-神领物流项目
+```
 
-![demo](https://github.com/PanJiaChen/PanJiaChen.github.io/blob/master/images/demo.gif)
+#### 完成自己的模块要求之后推送该开发分支
 
-## Extra
+```bash
+git add .
+git commit -m 'xxxx'
+git push
+```
 
-If you want router permission && generate menu by user roles , you can use this branch [permission-control](https://github.com/PanJiaChen/vue-admin-template/tree/permission-control)
 
-For `typescript` version, you can use [vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template) (Credits: [@Armour](https://github.com/Armour))
 
-## Related Project
+**首先通过远程地址克隆仓库，切换至开发分支后可直接进行开发。对应模块完成后可进行远程推送，请确保在此期间没有其他人与你一同进行推送。==推送分支为feat分支==**
 
-- [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
+> 注：推送项目时请像群里发送确认消息，以保证远程推送不会同时进行。
 
-- [electron-vue-admin](https://github.com/PanJiaChen/electron-vue-admin)
-
-- [vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template)
-
-- [awesome-project](https://github.com/PanJiaChen/vue-element-admin/issues/2312)
-
-## Browsers support
-
-Modern browsers and Internet Explorer 10+.
-
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
-| --------- | --------- | --------- | --------- |
-| IE10, IE11, Edge| last 2 versions| last 2 versions| last 2 versions
-
-## License
-
-[MIT](https://github.com/PanJiaChen/vue-admin-template/blob/master/LICENSE) license.
-
-Copyright (c) 2017-present PanJiaChen
+命名开发分支风格：`feat-shenling-名字` ,such: `feat-shenling-小明`

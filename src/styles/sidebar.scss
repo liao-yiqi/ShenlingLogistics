@@ -10,7 +10,8 @@
   .sidebar-container {
     transition: width 0.28s;
     width: $sideBarWidth !important;
-    background-color: #fff;
+    background-color: $menuBg;
+    background: #fff;
     height: 100%;
     position: fixed;
     font-size: 0px;
@@ -19,7 +20,7 @@
     left: 0;
     z-index: 1001;
     overflow: hidden;
-    height: 100%;
+
     // reset element-ui css
     .horizontal-collapse-transition {
       transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
@@ -27,6 +28,7 @@
 
     .scrollbar-wrapper {
       overflow-x: hidden !important;
+      background: url('~@/assets/common/leftnavBg.png') no-repeat 0 100%;
     }
 
     .el-scrollbar__bar.is-vertical {
@@ -66,11 +68,27 @@
       border: none;
       height: 100%;
       width: 100% !important;
+
+      a{
+        li{
+          .svg-icon{
+            font-size: 18px;
+            vertical-align: middle;
+          }
+          span{
+            color: #000 !important;
+          }
+          &:hover{
+            background-color: #f6f7fa!important;
+          }
+        }
+      }
     }
 
     // menu hover
     .submenu-title-noDropdown,
     .el-submenu__title {
+      color: #000 !important;
       &:hover {
         background-color: $menuHover !important;
       }
@@ -83,7 +101,7 @@
     & .nest-menu .el-submenu>.el-submenu__title,
     & .el-submenu .el-menu-item {
       min-width: $sideBarWidth !important;
-      background-color: $subMenuBg !important;
+      // background-color: $subMenuBg !important;
 
       &:hover {
         background-color: $subMenuHover !important;
