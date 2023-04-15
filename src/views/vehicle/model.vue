@@ -44,8 +44,8 @@
               />
             </el-form-item>
             <el-form-item>
-              <el-button class="btn" style="color:#fff;background-color:#e15536">搜索</el-button>
-              <el-button class="btn">重置</el-button>
+              <el-button class="btn" style="color:#fff;background-color:#e15536" @click="searchBrn">搜索</el-button>
+              <el-button class="btn" @click="resetBtn">重置</el-button>
             </el-form-item>
           </el-row>
         </el-form>
@@ -230,20 +230,12 @@ export default {
       dialogFrom: {},
       // 发送请求表单
       list: {
-        brand: '2',
-        deviceGpsId: '3',
-        driverName: '张三',
-        driverNum: 6,
-        licensePlate: '2',
-        loadingRatio: 3,
-        picture: '22',
-        runStatus: 5,
-        status: 1,
-        transportLineName: '张三',
-        truckLicenseId: 1331,
-        truckTypeId: 1252354234,
-        truckTypeName: '卡车',
-        workStatus: 2
+        measureWidth: 0.0,
+        measureLong: 0.0,
+        measureHigh: 0.0,
+        name: '',
+        allowableVolume: null,
+        allowableLoad: null
       }
     }
   },
@@ -320,6 +312,46 @@ export default {
     addBtn() {
       // 显示弹窗
       this.isShowDialog = true
+    },
+    // 搜索功能
+    async searchBrn() {
+      // 在formData中筛选所需要的值
+      const newForData = {}
+      for (const key in this.formData) {
+        if (this.formData[key]) {
+          newForData[key] = this.formData[key]
+        }
+      }
+      // console.log(newForData)
+      // 复用获取车辆分页数据接口
+      // 这里需要将进行展开将两个对象合并
+      const { data } = await getVehiclePages({ ...this.pageConfig, ...newForData })
+      this.truckData = data.items
+      this.total = +data.counts
+      console.log(data)
+    },
+    // 重置功能
+    async resetBtn() {
+      this.$loading = true
+      this.pageConfig = {
+        page: 1,
+        pageSize: 5
+      }
+      const res = await getVehiclePages(this.pageConfig)
+      const { items } = res.data
+      this.truckData = items
+      this.formData = {
+        id: '',
+        allowableLoad: '', // 应载重量
+        allowableVolume: '', // 应载体积
+        name: '',
+        licensePlate: '',
+        truckTypeId: '',
+        workStatus: '',
+        measureLong: '',
+        measureWidth: '',
+        measureHigh: ''
+      }
     }
   }
 }
