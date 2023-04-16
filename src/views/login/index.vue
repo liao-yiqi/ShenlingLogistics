@@ -134,8 +134,11 @@ export default {
       immediate: true
     }
   },
-  created() {
+  mounted() {
     this.getCode()
+  },
+  created() {
+
   },
   methods: {
     showPwd() {

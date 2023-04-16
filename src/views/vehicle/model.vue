@@ -276,6 +276,7 @@ export default {
       // 发送请求获取车辆数据
       const res = await getVehicleDetails(id)
       this.dialogFrom = res.data
+      console.log(this.dialogFrom)
       // 显示弹窗
       this.isShowDialog = true
     },

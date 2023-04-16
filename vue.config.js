@@ -38,7 +38,7 @@ module.exports = {
     },
     proxy: {
       '/api': {
-        target: 'https://slwl-geteway.itheima.net',
+        target: 'https://slwl-api.itheima.net',
         changeOrigin: true,
         // 路径重写
         pathRewrite: {
