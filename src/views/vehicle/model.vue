@@ -114,15 +114,15 @@
         <!-- 分页组件 -->
         <el-row type="flex" justify="center">
           <el-pagination
-            style="margin-top: 20px"
-            :page-sizes="[10, 20, 30, 40]"
-            :page-size="10"
-            layout="total,sizes, prev, pager, next, jumper"
-            :total="total"
+            :page-sizes="[100, 200, 300, 400]"
+            :page-size="100"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="400"
             @size-change="handleSizeChange"
             @current-change="currentChange"
           />
-        </el-row></el-card>
+        </el-row>
+      </el-card>
       <!-- 弹窗 -->
       <el-dialog
         :title="dialogFrom.id?'编辑车型':'新增车型'"
@@ -222,7 +222,44 @@ export default {
         page: 1,
         pageSize: 5
       },
-      truckData: [],
+      truckData: [
+        { id: Date.now(),
+          name: '6.8厢式货车',
+          num: 6,
+          allowableLoad: 2.8,
+          allowableVolume: 4.5,
+          measureLong: 6,
+          measureWidth: 7,
+          measureHigh: 8
+        },
+        { id: Date.now(),
+          name: '6.8厢式货车',
+          num: 6,
+          allowableLoad: 2.8,
+          allowableVolume: 4.5,
+          measureLong: 6,
+          measureWidth: 7,
+          measureHigh: 8
+        },
+        { id: Date.now(),
+          name: '6.8厢式货车',
+          num: 6,
+          allowableLoad: 2.8,
+          allowableVolume: 4.5,
+          measureLong: 6,
+          measureWidth: 7,
+          measureHigh: 8
+        },
+        { id: Date.now(),
+          name: '6.8厢式货车',
+          num: 6,
+          allowableLoad: 2.8,
+          allowableVolume: 4.5,
+          measureLong: 6,
+          measureWidth: 7,
+          measureHigh: 8
+        }
+      ],
       total: 0,
       isShowDialog: false,
       // 弹窗组件默认为空
@@ -242,23 +279,19 @@ export default {
   async created() {
     this.dialogData()
   },
-  mounted() {
-    const jump = document.getElementsByClassName('el-pagination__jump')[0].childNodes
-    jump[0].nodeValue = '前往'
-    const total = document.getElementsByClassName('el-pagination__total')[0].childNodes
-    total[0].nodeValue = '共'
-  },
+
   methods: {
     // 获取分页数据
     async dialogData() {
       // 获取分页数据
-      const res = await getVehiclePages(this.pageConfig)
-      const { items, counts, pages } = res.data
+      /* const res = await getVehiclePages(this.pageConfig)
+      console.log(res) */
+
+    /*   const { items, counts, pages } = res.data
       this.pageConfig.pageSize = parseInt(pages)
       this.total = parseInt(counts)
-      console.log(res)
       // console.log(typeof this.total)
-      this.truckData = items
+      this.truckData = items */
     },
     // 切换分页
     currentChange(newPage) {
@@ -267,7 +300,6 @@ export default {
     },
     // 页面条数下拉框
     handleSizeChange(newPagesize) {
-      console.log(`每页 ${newPagesize} 条`)
       this.pageConfig.pageSize = newPagesize
       this.dialogData()
     },
