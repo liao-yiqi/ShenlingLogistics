@@ -222,7 +222,49 @@ export default {
         page: 1,
         pageSize: 5
       },
-      truckData: [],
+      // 表单假数据
+      truckData: [
+        {
+          id: Date.now(),
+          name: '6.8米厢式货车',
+          num: 6,
+          allowableLoad: 28,
+          allowableVolume: 52,
+          measureLong: 6,
+          measureWidth: 7,
+          measureHigh: 8
+        },
+        {
+          id: Date.now(),
+          name: '6.8米厢式货车',
+          num: 6,
+          allowableLoad: 28,
+          allowableVolume: 52,
+          measureLong: 6,
+          measureWidth: 7,
+          measureHigh: 8
+        },
+        {
+          id: Date.now(),
+          name: '6.8米厢式货车',
+          num: 6,
+          allowableLoad: 28,
+          allowableVolume: 52,
+          measureLong: 6,
+          measureWidth: 7,
+          measureHigh: 8
+        },
+        {
+          id: Date.now(),
+          name: '6.8米厢式货车',
+          num: 6,
+          allowableLoad: 28,
+          allowableVolume: 52,
+          measureLong: 6,
+          measureWidth: 7,
+          measureHigh: 8
+        }
+      ],
       total: 0,
       isShowDialog: false,
       // 弹窗组件默认为空
@@ -252,13 +294,13 @@ export default {
     // 获取分页数据
     async dialogData() {
       // 获取分页数据
-      const res = await getVehiclePages(this.pageConfig)
+      /*  const res = await getVehiclePages(this.pageConfig)
       const { items, counts, pages } = res.data
       this.pageConfig.pageSize = parseInt(pages)
       this.total = parseInt(counts)
       console.log(res)
       // console.log(typeof this.total)
-      this.truckData = items
+      this.truckData = items */
     },
     // 切换分页
     currentChange(newPage) {
