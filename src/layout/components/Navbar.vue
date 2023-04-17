@@ -63,13 +63,13 @@ export default {
       }).then(async() => {
         await this.$store.dispatch('user/logout')
         this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-        this.$message.success({
+        this.$notify.success({
           title: '消息',
           message: '退出成功',
           duration: 1500
         })
       }).catch(() => {
-        this.$message.info({
+        this.$notify.info({
           title: '消息',
           message: '已成功取消',
           duration: 1500
