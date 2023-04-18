@@ -36,17 +36,17 @@
       <el-tabs
         ref="tab"
         v-model="formData.workStatus"
-        style="margin: 20px 0"
+        style="margin: 20px 0;backgroundColor='red'"
         type="border-card"
         @tab-click="tabClick"
       >
-        <el-tab-pane name="00">
+        <el-tab-pane name="1">
           <template #label>全部</template>
         </el-tab-pane>
-        <el-tab-pane name="1">
+        <el-tab-pane name="2">
           <template #label>可用</template>
         </el-tab-pane>
-        <el-tab-pane name="0">
+        <el-tab-pane name="3">
           <template #label>停用</template>
         </el-tab-pane>
       </el-tabs>
@@ -143,27 +143,44 @@
 </template>
 
 <script>
+import { getTruck } from '@/api/modules/vehicle/vehicles'
 export default {
   data() {
     return {
       formData: {
         truckTypeId: '',
         licensePlate: '',
+        truckTypeName: '',
+        driverNum: '',
         // tab切换的值
-        workStatus: '00'
+        workStatus: '1',
+        deviceGpsId: '',
+        allowableLoad: '', // 应载重量
+        allowableVolume: '' // 应载体积
       },
       vehicleTypeList: [],
       counts: [],
       tableData: [],
-      showEmpty: true
+      showEmpty: true,
+      pageConfig: {
+        page: '1',
+        pageSize: '5'
+      }
     }
   },
   created() {
-
+    this.getTruck()
   },
   methods: {
     tabClick() {
       console.log('tab被点击')
+      console.log(this.formData.workStatus)
+    },
+    async getTruck() {
+      console.log('调用分页接口前')
+      const res = await getTruck(this.pageConfig)
+      console.log(res)
+      console.log('调用分页接口后')
     }
   }
 
@@ -180,6 +197,9 @@ export default {
     margin: 0;
   }
 }
-
+.active {
+  background-color: #ffeeeb;
+  color: #e15536;
+}
 </style>>
 
