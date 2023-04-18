@@ -99,6 +99,7 @@
                 size="mini"
                 type="text"
                 style="color:#f56c6c"
+                @click="delBtn(row.id)"
               >删除</el-button>
             </template>
           </el-table-column>
@@ -115,8 +116,8 @@
         <el-row type="flex" justify="center">
           <el-pagination
             style="margin-top: 20px"
-            :page-sizes="[10, 20, 30, 40]"
-            :page-size="10"
+            :page-sizes="[10, 20, 30, 50]"
+            :page-size="pageConfig.pageSize"
             layout="total,sizes, prev, pager, next, jumper"
             :total="total"
             @size-change="handleSizeChange"
@@ -125,21 +126,21 @@
         </el-row></el-card>
       <!-- 弹窗 -->
       <el-dialog
-        :title="dialogFrom.id?'编辑车型':'新增车型'"
+        :title="formData.id?'编辑车型':'新增车型'"
         :visible="isShowDialog"
         custom-class="dialog"
         @close="btnCancel"
       >
-        <el-form ref="addRef" :model="dialogFrom" label-width="120px">
+        <el-form ref="addRef" :model="formData" label-width="120px">
           <el-form-item label="车辆类型" prop="name">
             <el-input
-              v-model="dialogFrom.name"
+              v-model="formData.name"
               placeholder="请输入车辆类型"
             />
           </el-form-item>
           <el-form-item label="应载重量" prop="allowableLoad">
             <el-input
-              v-model.number="dialogFrom.allowableLoad"
+              v-model.number="formData.allowableLoad"
               placeholder="请输入车型载重"
             >
               <span
@@ -150,7 +151,7 @@
           </el-form-item>
           <el-form-item label="应载体积" prop="allowableVolume">
             <el-input
-              v-model.number="dialogFrom.allowableVolume"
+              v-model.number="formData.allowableVolume"
               placeholder="请输入车型体积"
             >
               <span
@@ -160,7 +161,7 @@
             </el-input>
           </el-form-item>
           <el-form-item label="长" prop="measureLong">
-            <el-input v-model.number="dialogFrom.measureLong">
+            <el-input v-model.number="formData.measureLong">
               <span
                 slot="suffix"
                 style="color: black; margin-right: 5px"
@@ -168,7 +169,7 @@
             </el-input>
           </el-form-item>
           <el-form-item label="宽" prop="measureWidth">
-            <el-input v-model.number="dialogFrom.measureWidth">
+            <el-input v-model.number="formData.measureWidth">
               <span
                 slot="suffix"
                 style="color: black; margin-right: 5px"
@@ -176,7 +177,7 @@
             </el-input>
           </el-form-item>
           <el-form-item label="高" prop="measureHigh">
-            <el-input v-model.number="dialogFrom.measureHigh">
+            <el-input v-model.number="formData.measureHigh">
               <span
                 slot="suffix"
                 style="color: black; margin-right: 5px"
@@ -197,7 +198,7 @@
 
 <script>
 // 请求接口引入
-import { getVehiclePages, getVehicleDetails, updateVehicleDetails, addVehicle } from '@/api/modules/vehicle/model'
+import { getVehiclePages, getVehicleDetails, updateVehicleDetails, addVehicle, deleteTrucktype } from '@/api/modules/vehicle/model'
 // 引入枚举数据
 import vehicle from '@/constant/vehicle'
 export default {
@@ -220,87 +221,28 @@ export default {
       },
       pageConfig: {
         page: 1,
-        pageSize: 5
+        pageSize: 10
       },
-      // 表单假数据
-      truckData: [
-        {
-          id: Date.now(),
-          name: '6.8米厢式货车',
-          num: 6,
-          allowableLoad: 28,
-          allowableVolume: 52,
-          measureLong: 6,
-          measureWidth: 7,
-          measureHigh: 8
-        },
-        {
-          id: Date.now(),
-          name: '6.8米厢式货车',
-          num: 6,
-          allowableLoad: 28,
-          allowableVolume: 52,
-          measureLong: 6,
-          measureWidth: 7,
-          measureHigh: 8
-        },
-        {
-          id: Date.now(),
-          name: '6.8米厢式货车',
-          num: 6,
-          allowableLoad: 28,
-          allowableVolume: 52,
-          measureLong: 6,
-          measureWidth: 7,
-          measureHigh: 8
-        },
-        {
-          id: Date.now(),
-          name: '6.8米厢式货车',
-          num: 6,
-          allowableLoad: 28,
-          allowableVolume: 52,
-          measureLong: 6,
-          measureWidth: 7,
-          measureHigh: 8
-        }
-      ],
+
+      truckData: [],
       total: 0,
-      isShowDialog: false,
-      // 弹窗组件默认为空
-      // 弹窗表单
-      dialogFrom: {},
-      // 发送请求表单
-      list: {
-        measureWidth: 0.0,
-        measureLong: 0.0,
-        measureHigh: 0.0,
-        name: '',
-        allowableVolume: null,
-        allowableLoad: null
-      }
+      isShowDialog: false
     }
   },
   async created() {
     this.dialogData()
   },
-  mounted() {
-    const jump = document.getElementsByClassName('el-pagination__jump')[0].childNodes
-    jump[0].nodeValue = '前往'
-    const total = document.getElementsByClassName('el-pagination__total')[0].childNodes
-    total[0].nodeValue = '共'
-  },
   methods: {
     // 获取分页数据
     async dialogData() {
       // 获取分页数据
-      /*  const res = await getVehiclePages(this.pageConfig)
-      const { items, counts, pages } = res.data
-      this.pageConfig.pageSize = parseInt(pages)
+      const res = await getVehiclePages(this.pageConfig)
+      const { items, counts, page, pageSize } = res.data
+      this.pageConfig.page = parseInt(page)
+      this.pageConfig.pageSize = parseInt(pageSize)
       this.total = parseInt(counts)
       console.log(res)
-      // console.log(typeof this.total)
-      this.truckData = items */
+      this.truckData = items
     },
     // 切换分页
     currentChange(newPage) {
@@ -309,7 +251,6 @@ export default {
     },
     // 页面条数下拉框
     handleSizeChange(newPagesize) {
-      console.log(`每页 ${newPagesize} 条`)
       this.pageConfig.pageSize = newPagesize
       this.dialogData()
     },
@@ -317,29 +258,17 @@ export default {
     async editBtn(id) {
       // 发送请求获取车辆数据
       const res = await getVehicleDetails(id)
-      this.dialogFrom = res.data
-      console.log(this.dialogFrom)
+      this.formData = res.data
+      console.log(this.formData)
       // 显示弹窗
       this.isShowDialog = true
     },
     // 确认按钮
     async btnOK() {
-      /* const res = await updateVehicleDetails({
-        ...this.dialogFrom,
-        ...this.list
-      }) */
-      console.log({
-        ...this.dialogFrom,
-        ...this.list
-      })
-      // console.log(res)
-      this.formData.id ? await updateVehicleDetails({
-        ...this.dialogFrom,
-        ...this.list
-      }) : await addVehicle({
-        ...this.dialogFrom,
-        ...this.list
-      })
+      this.formData.id ? await updateVehicleDetails(this.formData) : await addVehicle(this.formData)
+      this.$message.success('操作成功')
+      this.btnCancel()
+      this.dialogData()
     },
     // 取消按钮
     btnCancel() {
@@ -395,6 +324,17 @@ export default {
         measureWidth: '',
         measureHigh: ''
       }
+    },
+    // 删除功能
+    async delBtn(id) {
+      // 二次询问
+      await this.$confirm('是否删除数据')
+      // 发送请求
+      await deleteTrucktype(id)
+      // 提示
+      this.$message.success('删除成功')
+      // 刷新页面
+      this.dialogData()
     }
   }
 }
