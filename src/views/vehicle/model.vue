@@ -230,16 +230,14 @@ export default {
     }
   },
   async created() {
-    this.dialogData()
+    this.getVehicleType()
   },
   methods: {
     // 获取分页数据
-    async dialogData() {
+    async getVehicleType() {
       // 获取分页数据
       const res = await getVehiclePages(this.pageConfig)
-      const { items, counts, page, pageSize } = res.data
-      this.pageConfig.page = parseInt(page)
-      this.pageConfig.pageSize = parseInt(pageSize)
+      const { items, counts } = res.data
       this.total = parseInt(counts)
       console.log(res)
       this.truckData = items
@@ -247,12 +245,12 @@ export default {
     // 切换分页
     currentChange(newPage) {
       this.pageConfig.page = newPage
-      this.dialogData()
+      this.getVehicleType()
     },
     // 页面条数下拉框
     handleSizeChange(newPagesize) {
       this.pageConfig.pageSize = newPagesize
-      this.dialogData()
+      this.getVehicleType()
     },
     // 编辑按钮
     async editBtn(id) {
@@ -268,7 +266,7 @@ export default {
       this.formData.id ? await updateVehicleDetails(this.formData) : await addVehicle(this.formData)
       this.$message.success('操作成功')
       this.btnCancel()
-      this.dialogData()
+      this.getVehicleType()
     },
     // 取消按钮
     btnCancel() {
@@ -334,7 +332,7 @@ export default {
       // 提示
       this.$message.success('删除成功')
       // 刷新页面
-      this.dialogData()
+      this.getVehicleType()
     }
   }
 }
@@ -348,7 +346,9 @@ export default {
   border-radius: 5px!important;
   font-weight: 400;
 }
-
+::v-deep .el-dialog__body {
+  margin-right: 40px;
+}
 </style>
 
 <style lang="scss">

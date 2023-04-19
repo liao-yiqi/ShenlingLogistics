@@ -6,3 +6,9 @@ export function getTruck(params) {
     params
   })
 }
+export function searchTruckList(params) {
+  return request({
+    url: '/manager/truck/page',
+    params
+  })
+}
