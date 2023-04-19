@@ -26,8 +26,8 @@
               />
             </el-form-item>
             <el-form-item>
-              <el-button style="color:#fff;background-color:#e15536">搜索</el-button>
-              <el-button>重置</el-button>
+              <el-button style="color:#fff;background-color:#e15536" @click="searchBtn">搜索</el-button>
+              <el-button @click="resetBtn">重置</el-button>
             </el-form-item>
           </el-row>
         </el-form>
@@ -158,6 +158,7 @@
 
 <script>
 import { getTruck, searchTruckList } from '@/api/modules/vehicle/vehicles'
+import { getVehicleList } from '@/api/modules/vehicle/model'
 export default {
   data() {
     return {
@@ -185,8 +186,10 @@ export default {
   },
   created() {
     this.getTruck()
+    this.getVehicleList()
   },
   methods: {
+    // 获取车辆详情
     async getTruck() {
       const res = await getTruck(this.pageConfig)
       const { items, counts } = res.data
@@ -204,8 +207,34 @@ export default {
       this.pageConfig.pageSize = newPagesize
       this.getTruck()
     },
+    // 获取车辆类型信息列表
+    async getVehicleList() {
+      const res = await getVehicleList()
+      this.vehicleTypeList = res.data
+    },
+    // 搜索功能
+    async searchBtn() {
+      this.tabData()
+    },
+    // 重置功能
+    async resetBtn() {
+      this.$loading = true
+      this.pageConfig = {
+        page: 1,
+        pageSize: 10
+      }
+      const res = await getTruck(this.pageConfig)
+      const { items } = res.data
+      this.listData = items
+      // 因为select下拉框绑定的是truckTypeId,所以只需要将这个值改为空值就可以清空表单
+      this.formData = {
+        truckTypeId: '',
+        licensePlate: ''
+      }
+    },
     // tab栏点击
     tabClick() {
+      // 复用tab栏切换的方法
       this.tabData()
       console.log(this.formData.workStatus)
     },
@@ -223,8 +252,6 @@ export default {
             if (['0', '1'].includes(this.formData[key])) {
               newFormData[key] = this.formData[key]
               // console.log(key)
-              console.log('新的', newFormData[key])
-              console.log('旧的', this.formData[key])
             }
           }
         }

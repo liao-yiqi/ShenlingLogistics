@@ -12,3 +12,4 @@ export function searchTruckList(params) {
     params
   })
 }
+

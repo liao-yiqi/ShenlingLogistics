@@ -270,7 +270,7 @@ export default {
     },
     // 取消按钮
     btnCancel() {
-      this.dialogFrom = {
+      this.formData = {
         id: '',
         name: '',
         allowableLoad: '', // 车载重量

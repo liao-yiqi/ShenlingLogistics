@@ -47,3 +47,9 @@ export function deleteTrucktype(id) {
     method: 'delete'
   })
 }
+// 获取车辆类型信息列表
+export function getVehicleList() {
+  return request({
+    url: '/manager/truckType/simple'
+  })
+}
