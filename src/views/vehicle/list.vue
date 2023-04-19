@@ -195,7 +195,7 @@ export default {
       const { items, counts } = res.data
       this.listData = items
       this.total = parseInt(counts)
-      console.log(res.data)
+      // console.log(res.data)
     },
     // 切换分页
     currentChange(newPage) {
@@ -240,19 +240,14 @@ export default {
     },
     // tab栏点击切换数据
     async tabData() {
-      // 在formData里面筛选出有值的
       const newFormData = {}
+      // 遍历formData的值
       for (const key in this.formData) {
-        // 判断workStatus是否有值
-        // console.log(this.formData[key])
+        // 判断key值是否存在
         if (this.formData[key]) {
-          if (key !== 'workStatus') {
+          // 当点击全部的时候也能渲染页面
+          if (['0', '1'].includes(this.formData[key])) {
             newFormData[key] = this.formData[key]
-          } else {
-            if (['0', '1'].includes(this.formData[key])) {
-              newFormData[key] = this.formData[key]
-              // console.log(key)
-            }
           }
         }
       }
@@ -260,7 +255,6 @@ export default {
       const { counts, items } = res.data
       this.listData = items
       this.total = parseInt(counts)
-      console.log(res)
     }
   }
 
@@ -315,5 +309,7 @@ export default {
 ::v-deep .el-table__row>.el-table_1_column_3>.cell {
 padding-left: 5px;
 }
-
+::v-deep .el-table__row>.el-table_6_column_48>.cell {
+  padding-left: 5px;
+}
 </style>
