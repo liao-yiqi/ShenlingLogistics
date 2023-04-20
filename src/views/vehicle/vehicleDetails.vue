@@ -97,7 +97,7 @@
                 <el-row v-if="!flag" class="noEdit">
                   <!-- 无图片 -->
                   <img
-                    v-if="!fileList.length"
+                    v-if="!imgList.length"
                     style="width: 212px; height: 159px"
                     src="data:image/png;base64,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"
                   >
@@ -105,24 +105,24 @@
                   <div v-else class="imgs">
                     <img
                       style="width: 212px; height: 159px"
-                      :src="fileList[0].url"
+                      :src="imgList[0].url"
                     >
                     <img
-                      v-if="fileList[1]"
+                      v-if="imgList[1]"
                       style="width: 212px; height: 159px; margin-left: 20px"
-                      :src="fileList[1].url"
+                      :src="imgList[1].url"
                     >
                   </div>
                 </el-row>
-                <!-- 上传图片编辑的样子 -->
+                <!-- 编辑显示 -->
                 <el-row v-else type="flex" class="upload">
                   <img
-                    v-if="!fileList.length"
+                    v-if="!imgList.length"
                     style="width: 212px; height: 159px"
                     src="https://yjy-slwl-oss.oss-cn-hangzhou.aliyuncs.com/2a6cbcb0-93d0-41a3-ae18-248ee68c1def.png"
                   >
                   <img
-                    v-if="!fileList.length"
+                    v-if="!imgList.length"
                     style="width: 212px; height: 159px; margin: 0 20px"
                     src="https://yjy-slwl-oss.oss-cn-hangzhou.aliyuncs.com/95f1ad63-c8f0-4be3-a5e9-c3c9320de30f.png"
                     alt=""
@@ -130,13 +130,7 @@
                   <!-- 图片上传 -->
                   <el-upload
                     list-type="picture-card"
-                    :on-preview="previewPic"
                     action="#"
-                    :http-request="upload"
-                    :file-list="fileList"
-                    :on-change="changePic"
-                    :before-upload="beforeUpload"
-                    :on-remove="removePic"
                   >
                     <i class="el-icon-upload" />
                   </el-upload>
@@ -272,7 +266,7 @@
                 <el-row v-if="!flag" class="noEdit">
                   <!-- 无图片 -->
                   <img
-                    v-if="!fileList.length"
+                    v-if="!imgList.length"
                     style="width: 212px; height: 159px"
                     src="data:image/png;base64,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"
                   >
@@ -280,23 +274,21 @@
                   <div v-else class="imgs">
                     <img
                       style="width: 212px; height: 159px"
-                      :src="fileList[0].url"
                     >
                     <img
-                      v-if="fileList[1]"
+                      v-if="imgList"
                       style="width: 212px; height: 159px; margin-left: 20px"
-                      :src="fileList[1].url"
                     >
                   </div>
                 </el-row>
                 <el-row v-else type="flex" class="upload">
                   <img
-                    v-if="!fileList.length"
+                    v-if="!imgList.length"
                     style="width: 212px; height: 159px"
                     src="https://yjy-slwl-oss.oss-cn-hangzhou.aliyuncs.com/086942c3-6c43-432d-80f1-64f53b424be9.png"
                   >
                   <img
-                    v-if="!fileList.length"
+                    v-if="!imgList.length"
                     style="width: 212px; height: 159px; margin: 0 20px"
                     src="https://yjy-slwl-oss.oss-cn-hangzhou.aliyuncs.com/4002ebba-8a62-4a5c-b64c-358189456eb6.png"
                     alt=""
@@ -304,13 +296,7 @@
                   <!-- 图片上传 -->
                   <el-upload
                     list-type="picture-card"
-                    :on-preview="previewPic"
                     action="#"
-                    :http-request="upload"
-                    :file-list="fileList"
-                    :on-change="changePic"
-                    :before-upload="beforeUpload"
-                    :on-remove="removePic"
                   >
                     <i class="el-icon-upload" />
                   </el-upload>
@@ -328,7 +314,6 @@
           </el-tab-pane>
         </el-tabs>
         <!-- 公共按钮 -->
-
         <div class="PublicBtn">
           <el-divider />
           <el-row v-if="!flag" type="flex" justify="center">
@@ -336,6 +321,7 @@
               style="color:#fff;
           background-color:#e15536"
               class="editBtn"
+              @click="flag=true"
             >编辑</el-button>
           </el-row>
           <el-row v-else type="flex" justify="center">
@@ -349,14 +335,15 @@
 </template>
 
 <script>
-
+import { getTruckDetails } from '@/api/modules/vehicle/vehicles'
 export default {
   data() {
     return {
       activeName: 'baseInfo',
       baseInfoData: {},
       licenseData: {},
-      id: this.$route.query.id,
+      // 页面进来获取id
+      id: this.$route.params.id,
       rules: {
         allowableLoad: [{ required: true, message: '请输入车辆载重' }],
         licensePlate: [{ required: true, message: '请输入车牌号码' }],
@@ -366,11 +353,31 @@ export default {
       },
       // 用于判断是展示input还是文字
       flag: false,
-      fileList: []
+      // 存放图片数组
+      imgList: []
     }
   },
+  created() {
+    this.getBasicInfo()
+    console.log(this.id)
+  },
+
   methods: {
-    handleClick() {}
+    handleClick() {},
+    // 获取车辆详情
+    async getBasicInfo() {
+      const { data } = await getTruckDetails(this.id)
+      this.baseInfoData = data
+      console.log(data)
+      // 因为后端返回过来的图片是字符串形式 并且两张图片是连在一起的,所以需要做处理
+      if (data.picture) {
+        // 将图片格式进行分割重组
+        this.imgList = data.picture.split(',').map((item) => {
+          return { url: item }
+        })
+        console.log(this.imgList)
+      }
+    }
   }
 }
 </script>
@@ -385,7 +392,7 @@ export default {
   height: 750px;
 }
 .PublicBtn {
-  margin-top: 280px;
+  margin-top: 215px;
 }
 .editBtn {
   width: 110px;

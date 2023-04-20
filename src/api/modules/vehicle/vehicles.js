@@ -28,3 +28,10 @@ export function enableTruck(id) {
     method: 'put'
   })
 }
+
+// 通过id获取车辆详情
+export function getTruckDetails(id) {
+  return request({
+    url: `/manager/truck/${id}`
+  })
+}

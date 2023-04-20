@@ -4,7 +4,7 @@
 .el-breadcrumb__inner a {
   font-weight: 400 !important;
 }
-
+$--color-primary: #e15536;
 .el-upload {
   input[type="file"] {
     display: none !important;
@@ -47,3 +47,5 @@
 .el-range-separator {
   box-sizing: content-box;
 }
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+@import "~element-ui/packages/theme-chalk/src/index";
