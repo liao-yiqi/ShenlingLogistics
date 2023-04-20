@@ -108,6 +108,7 @@
                 size="mini"
                 type="text"
                 style="color: #409eff"
+                @click="$router.push(`/vehicleDetails/${row.id}`)"
               >查看详情</el-button>
               <span style="margin: 0 10px; color: #dcdfe6">|</span>
               <!-- row.workStatus:0 表示停用了，1 表示启用了 -->
@@ -286,6 +287,7 @@ export default {
         truckTypeId: '',
         licensePlate: ''
       }
+      this.formData.workStatus = '00'
     },
     // tab栏点击
     tabClick() {
@@ -317,6 +319,7 @@ export default {
     },
     // 弹窗确定按钮
     async btnOk() {
+      await this.$refs.addRef.validate()
       const res = await addTruck(this.formData)
       this.$message.success('新增成功')
       this.btnCancel()

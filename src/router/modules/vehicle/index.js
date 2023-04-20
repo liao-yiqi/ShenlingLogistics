@@ -27,8 +27,12 @@ export default {
       }
     },
     {
-      path: 'vehicle-detail/:id&:formUrlName', // 车辆详情
-      component: () => import('@/views/vehicle/vehicleDetails')
+      path: '/vehicleDetails/:id', // 车辆详情
+      component: () => import('@/views/vehicle/vehicleDetails'),
+      meta: {
+        title: '车辆详情'
+      },
+      hidden: true
     }
   ]
 }
