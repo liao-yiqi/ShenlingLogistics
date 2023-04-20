@@ -52,8 +52,13 @@
       </el-tabs>
       <!-- 列表 -->
       <el-card style="margin-top: 20px">
-        <el-button style="color:#fff;background-color:#e15536">
-          新增车辆</el-button>
+        <el-button
+          style="color:#fff;
+          background-color:#e15536"
+          @click="isShowDialog=true"
+        >
+          新增车辆
+        </el-button>
         <el-table
           :data="listData"
           :header-cell-style="{ background: '#f8faff' }"
@@ -110,14 +115,13 @@
                 size="mini"
                 type="text"
                 :class="{ blue: row.workStatus==0, red: row.workStatus==1 }"
-                @click="setWhat('run', row.id, row.workStatus)"
+                @click="setWhat(row.id, row.workStatus)"
               >{{ row.workStatus == 0 ? "启用" : "停用" }}</el-button>
               <span style="margin: 0 10px; color: #dcdfe6">|</span>
               <el-button
                 size="mini"
                 style="color: #409eff"
                 type="text"
-                @click="setWhat('setDriver', row.id)"
               >配置司机</el-button>
             </template>
           </el-table-column>
@@ -152,12 +156,52 @@
           />
         </el-row>
       </el-card>
+      <el-dialog
+        title="新增车辆"
+        :visible="isShowDialog"
+        custom-class="dialog"
+        @close="btnCancel"
+      >
+        <el-form ref="addRef" :model="formData" label-width="120px">
+          <el-form-item label="车辆类型">
+            <el-select
+              v-model="formData.truckTypeId"
+              clearable
+            >
+              <el-option
+                v-for="item in vehicleTypeList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="车牌号码" prop="licensePlate">
+            <el-input
+              v-model.number="formData.licensePlate"
+              placeholder="请输入车牌号码"
+            />
+          </el-form-item>
+          <el-form-item label="GPS设备ID" prop="deviceGpsId">
+            <el-input
+              v-model.number="formData.deviceGpsId"
+              placeholder="请输入GPS设备ID"
+            />
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-row type="flex" justify="center">
+            <el-button class="btn" style="color:#fff;background-color:#e15536" @click="btnOk">确 定</el-button>
+            <el-button class="btn" @click="btnCancel">取 消</el-button>
+          </el-row>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
-import { getTruck, searchTruckList } from '@/api/modules/vehicle/vehicles'
+import { getTruck, searchTruckList, addTruck, enableTruck } from '@/api/modules/vehicle/vehicles'
 import { getVehicleList } from '@/api/modules/vehicle/model'
 export default {
   data() {
@@ -167,6 +211,15 @@ export default {
         licensePlate: '',
         truckTypeName: '',
         driverNum: '',
+        deiverName: '',
+        id: '',
+        loadingRatio: '',
+        picture: '',
+        runStatus: '',
+        status: '',
+        transportLineName: '',
+        truckLicenseId: '',
+        brand: '',
         // tab切换的值
         workStatus: '00',
         deviceGpsId: '',
@@ -181,7 +234,8 @@ export default {
         page: 1,
         pageSize: 10
       },
-      total: 0
+      total: 0,
+      isShowDialog: false
     }
   },
   created() {
@@ -260,6 +314,31 @@ export default {
       this.listData = items
       this.total = parseInt(counts)
       console.log(res.data)
+    },
+    // 弹窗确定按钮
+    async btnOk() {
+      const res = await addTruck(this.formData)
+      this.$message.success('新增成功')
+      this.btnCancel()
+      this.getTruck()
+      console.log(res)
+    },
+    // 弹窗取消按钮
+    btnCancel() {
+      this.formData = {
+        truckTypeId: '',
+        licensePlate: '',
+        truckTypeName: '',
+        deviceGpsId: '',
+        // tab切换的值
+        workStatus: '00'
+      }
+      this.isShowDialog = false
+    },
+    // 启动停用
+    async setWhat(id) {
+      const res = await enableTruck(id)
+      console.log(res)
     }
   }
 
@@ -275,8 +354,30 @@ export default {
     border-bottom: 1px solid #ffffff;
     margin: 0;
   }
-
+.dialog {
+border-radius: 10px;
+width: 600px;
 }
+.el-dialog__header {
+background-color: #f3f4f7;
+border-radius: 10px;
+}
+}
+.btn {
+  width: 90px;
+  height: 40px;
+  padding: 10px 20px!important;
+  border-radius: 5px!important;
+  font-weight: 400;
+  text-align: center;
+}
+.el-dialog__body {
+    padding: 40px 50px 0 20px!important;
+}
+::v-deep .el-dialog__body {
+  margin-right: 40px;
+}
+
 </style>>
 
 <style lang="scss" scoped>
@@ -314,4 +415,8 @@ padding-left: 5px;
 ::v-deep .el-table__row>.el-table_6_column_48>.cell {
   padding-left: 5px;
 }
+::v-deep .el-form {
+  top: 10px;
+}
 </style>
+

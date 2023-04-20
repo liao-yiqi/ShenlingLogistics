@@ -187,7 +187,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-row type="flex" justify="center">
-            <el-button type="primary" @click="btnOK">确 定</el-button>
+            <el-button style="color:#fff;background-color:#e15536" @click="btnOK">确 定</el-button>
             <el-button @click="btnCancel">取 消</el-button>
           </el-row>
         </span>
