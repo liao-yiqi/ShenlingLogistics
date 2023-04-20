@@ -157,16 +157,18 @@
           />
         </el-row>
       </el-card>
+      <!-- 弹窗 -->
       <el-dialog
         title="新增车辆"
         :visible="isShowDialog"
         custom-class="dialog"
         @close="btnCancel"
       >
-        <el-form ref="addRef" :model="formData" label-width="120px">
-          <el-form-item label="车辆类型">
+        <el-form ref="addRef" :model="formData" label-width="120px" :rules="rules">
+          <el-form-item label="车辆类型" prop="truckTypeId">
             <el-select
               v-model="formData.truckTypeId"
+              style="width: 100%"
               clearable
             >
               <el-option
@@ -236,9 +238,15 @@ export default {
         pageSize: 10
       },
       total: 0,
-      isShowDialog: false
+      isShowDialog: false,
+      rules: {
+        truckTypeId: [{ required: true, message: '请输入车辆类型' }],
+        licensePlate: [{ required: true, message: '请输入车牌号码' }],
+        deviceGpsId: [{ required: true, message: '请输入GPS设备ID' }]
+      }
     }
   },
+
   created() {
     this.getTruck()
     this.getVehicleList()
