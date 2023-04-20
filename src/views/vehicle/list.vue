@@ -214,6 +214,7 @@ export default {
     },
     // 搜索功能
     async searchBtn() {
+      // 通过id查找可以复用tab栏切换的方法
       this.tabData()
     },
     // 重置功能
@@ -234,9 +235,7 @@ export default {
     },
     // tab栏点击
     tabClick() {
-      // 复用tab栏切换的方法
       this.tabData()
-      console.log(this.formData.workStatus)
     },
     // tab栏点击切换数据
     async tabData() {
@@ -245,9 +244,14 @@ export default {
       for (const key in this.formData) {
         // 判断key值是否存在
         if (this.formData[key]) {
-          // 当点击全部的时候也能渲染页面
-          if (['0', '1'].includes(this.formData[key])) {
+          // 搜索复用的话 需要加上这个判断
+          if (key !== 'workStatus') {
             newFormData[key] = this.formData[key]
+          } else {
+            // 当点击全部的时候也能渲染页面
+            if (['0', '1'].includes(this.formData[key])) {
+              newFormData[key] = this.formData[key]
+            }
           }
         }
       }
@@ -255,6 +259,7 @@ export default {
       const { counts, items } = res.data
       this.listData = items
       this.total = parseInt(counts)
+      console.log(res.data)
     }
   }
 
@@ -298,9 +303,6 @@ export default {
 }
 .red {
   color: red;
-}
-.green {
-  color: #409eff;
 }
 ::v-deep .el-dialog__body {
   padding-top: 0;
