@@ -392,6 +392,7 @@ export default {
   height: 40px;
   border-radius: 5px;
 }
+
 ::v-deep .el-form-item__label {
   text-align: left;
 }
