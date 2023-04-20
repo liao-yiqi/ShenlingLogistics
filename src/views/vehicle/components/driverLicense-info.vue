@@ -1,6 +1,6 @@
 <template>
   <div>
-    行驶证信息
+    行驶证信息🔞
   </div>
 </template>
 
