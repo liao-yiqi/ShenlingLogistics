@@ -276,7 +276,7 @@ export default {
       const { items, counts } = res.data
       this.listData = items
       this.total = parseInt(counts)
-      // console.log(res.data)
+      console.log(res.data)
     },
 
     // 获取车辆类型信息列表
@@ -443,7 +443,10 @@ border-radius: 10px;
   color:#e15536
 }
 .red {
-  color: red;
+  color: #f56c6c;
+}
+.blue {
+  color:#64b0ff
 }
 ::v-deep .el-dialog__body {
   padding-top: 0;
