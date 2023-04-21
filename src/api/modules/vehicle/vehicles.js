@@ -35,3 +35,10 @@ export function getTruckDetails(id) {
     url: `/manager/truck/${id}`
   })
 }
+
+// 通过id获取行驶证详情
+export function getlicenseDetails(id) {
+  return request({
+    url: `/manager/truck/${id}/license`
+  })
+}
