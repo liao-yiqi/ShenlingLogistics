@@ -116,17 +116,31 @@
                 </el-row>
                 <!-- 编辑显示 -->
                 <el-row v-else type="flex" class="upload">
-                  <img
-                    v-if="!imgList.length"
-                    style="width: 212px; height: 159px"
-                    src="https://yjy-slwl-oss.oss-cn-hangzhou.aliyuncs.com/2a6cbcb0-93d0-41a3-ae18-248ee68c1def.png"
-                  >
-                  <img
-                    v-if="!basicInfoImgList.length"
-                    style="width: 212px; height: 159px; margin: 0 20px"
-                    src="https://yjy-slwl-oss.oss-cn-hangzhou.aliyuncs.com/95f1ad63-c8f0-4be3-a5e9-c3c9320de30f.png"
-                    alt=""
-                  >
+                  <!-- 如何没有图片 -->
+                  <div v-if="!basicInfoImgList.length">
+                    <img
+
+                      style="width: 212px; height: 159px"
+                      src="https://yjy-slwl-oss.oss-cn-hangzhou.aliyuncs.com/2a6cbcb0-93d0-41a3-ae18-248ee68c1def.png"
+                    >
+                    <img
+                      style="width: 212px; height: 159px; margin: 0 20px"
+                      src="https://yjy-slwl-oss.oss-cn-hangzhou.aliyuncs.com/95f1ad63-c8f0-4be3-a5e9-c3c9320de30f.png"
+                      alt=""
+                    >
+                  </div>
+                  <!-- 如果有图片 -->
+                  <div v-else>
+                    <img
+                      style="width: 212px; height: 159px"
+                      :src="basicInfoImgList[0].url"
+                    >
+                    <img
+                      v-if="basicInfoImgList[1]"
+                      style="width: 212px; height: 159px; margin-left: 20px"
+                      :src="basicInfoImgList[1].url"
+                    >
+                  </div>
                   <!-- 图片上传 -->
                   <el-upload
                     list-type="picture-card"
@@ -284,17 +298,29 @@
                   </div>
                 </el-row>
                 <el-row v-else type="flex" class="upload">
-                  <img
-                    v-if="!licenseImgList.length"
-                    style="width: 212px; height: 159px"
-                    src=""
-                  >
-                  <img
-                    v-if="!licenseImgList.length"
-                    style="width: 212px; height: 159px; margin: 0 20px"
-                    src=""
-                    alt=""
-                  >
+                  <div v-if="!licenseImgList.length">
+                    <img
+                      style="width: 212px; height: 159px"
+                      src=""
+                    >
+                    <img
+
+                      style="width: 212px; height: 159px; margin: 0 20px"
+                      src=""
+                      alt=""
+                    >
+                  </div>
+                  <div v-else>
+                    <img
+                      :src="licenseImgList[0].url"
+                      style="width: 212px; height: 159px"
+                    >
+                    <img
+                      v-if="licenseImgList[1]"
+                      :src="licenseImgList[1].url"
+                      style="width: 212px; height: 159px; margin-left: 20px"
+                    >
+                  </div>
                   <!-- 图片上传 -->
                   <el-upload
                     list-type="picture-card"
