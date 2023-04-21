@@ -201,6 +201,9 @@
         </span>
       </el-dialog>
       <!-- 配置司机提示弹窗 -->
+      <el-dialog :visible="isShowDriverConfig">
+        <div>🔞</div>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -253,6 +256,7 @@ export default {
       },
       total: 0,
       isShowDialog: false,
+      isShowDriverConfig: false,
       rules: {
         truckTypeId: [{ required: true, message: '请输入车辆类型' }],
         licensePlate: [{ required: true, message: '请输入车牌号码' }],
@@ -374,6 +378,7 @@ export default {
     async configDeiver(id) {
       const res = await configDeiver(id)
       console.log(res)
+      this.isShowDriverConfig = true
     }
   }
 
