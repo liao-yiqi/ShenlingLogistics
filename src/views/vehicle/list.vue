@@ -123,6 +123,7 @@
                 size="mini"
                 style="color: #409eff"
                 type="text"
+                @click="configDeiver(row.id)"
               >配置司机</el-button>
             </template>
           </el-table-column>
@@ -157,7 +158,7 @@
           />
         </el-row>
       </el-card>
-      <!-- 弹窗 -->
+      <!-- 添加车辆弹窗 -->
       <el-dialog
         title="新增车辆"
         :visible="isShowDialog"
@@ -199,12 +200,13 @@
           </el-row>
         </span>
       </el-dialog>
+      <!-- 配置司机提示弹窗 -->
     </div>
   </div>
 </template>
 
 <script>
-import { getTruck, searchTruckList, addTruck, enableTruck } from '@/api/modules/vehicle/vehicles'
+import { getTruck, searchTruckList, addTruck, enableTruck, configDeiver } from '@/api/modules/vehicle/vehicles'
 import { getVehicleList } from '@/api/modules/vehicle/model'
 export default {
   data() {
@@ -272,16 +274,7 @@ export default {
       this.total = parseInt(counts)
       // console.log(res.data)
     },
-    // 切换分页
-    currentChange(newPage) {
-      this.pageConfig.page = newPage
-      this.getTruck()
-    },
-    // 页面条数下拉框
-    handleSizeChange(newPagesize) {
-      this.pageConfig.pageSize = newPagesize
-      this.getTruck()
-    },
+
     // 获取车辆类型信息列表
     async getVehicleList() {
       const res = await getVehicleList()
@@ -337,6 +330,18 @@ export default {
       this.total = parseInt(counts)
       console.log(res.data)
     },
+    // 切换分页
+    currentChange(newPage) {
+      this.pageConfig.page = newPage
+      // this.getTruck()
+      this.searchBtn()
+    },
+    // 页面条数下拉框
+    handleSizeChange(newPagesize) {
+      this.pageConfig.pageSize = newPagesize
+      // this.getTruck()
+      this.searchBtn()
+    },
     // 弹窗确定按钮
     async btnOk() {
       await this.$refs.addRef.validate()
@@ -363,6 +368,11 @@ export default {
     // 启动停用
     async setWhat(id) {
       const res = await enableTruck(id)
+      console.log(res)
+    },
+    // 配置司机
+    async configDeiver(id) {
+      const res = await configDeiver(id)
       console.log(res)
     }
   }

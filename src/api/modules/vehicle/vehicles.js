@@ -42,3 +42,10 @@ export function getlicenseDetails(id) {
     url: `/manager/truck/${id}/license`
   })
 }
+
+// 获取绑定的司机
+export function configDeiver(truckId) {
+  return request({
+    url: `/manager/bindingDrivers/${truckId}`
+  })
+}
