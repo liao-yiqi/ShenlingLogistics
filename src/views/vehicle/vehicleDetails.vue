@@ -94,7 +94,7 @@
               </el-row>
               <el-form-item label="图片信息：">
                 <!-- 没有编辑的时候展示这个 -->
-                <el-row v-if="!flag" class="noEdit">
+                <el-row v-if="!flag">
                   <!-- 无图片 -->
                   <img
                     v-if="!imgList.length"
@@ -263,7 +263,7 @@
                 </el-form-item>
               </el-row>
               <el-form-item label="图片信息：">
-                <el-row v-if="!flag" class="noEdit">
+                <el-row v-if="!flag">
                   <!-- 无图片 -->
                   <img
                     v-if="!imgList.length"
@@ -361,7 +361,6 @@ export default {
     this.getBasicInfo()
     console.log(this.id)
   },
-
   methods: {
     handleClick() {},
     // 获取车辆详情

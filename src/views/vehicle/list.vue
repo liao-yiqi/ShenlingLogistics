@@ -164,10 +164,10 @@
         custom-class="dialog"
         @close="btnCancel"
       >
-        <el-form ref="addRef" :model="formData" label-width="120px" :rules="rules">
+        <el-form ref="addRef" :model="addform" label-width="120px" :rules="rules">
           <el-form-item label="车辆类型" prop="truckTypeId">
             <el-select
-              v-model="formData.truckTypeId"
+              v-model="addform.truckTypeId"
               style="width: 100%"
               clearable
             >
@@ -181,13 +181,13 @@
           </el-form-item>
           <el-form-item label="车牌号码" prop="licensePlate">
             <el-input
-              v-model.number="formData.licensePlate"
+              v-model.number="addform.licensePlate"
               placeholder="请输入车牌号码"
             />
           </el-form-item>
           <el-form-item label="GPS设备ID" prop="deviceGpsId">
             <el-input
-              v-model.number="formData.deviceGpsId"
+              v-model.number="addform.deviceGpsId"
               placeholder="请输入GPS设备ID"
             />
           </el-form-item>
@@ -213,22 +213,34 @@ export default {
         truckTypeId: '',
         licensePlate: '',
         truckTypeName: '',
-        driverNum: '',
-        deiverName: '',
         id: '',
-        loadingRatio: '',
-        picture: '',
-        runStatus: '',
         status: '',
-        transportLineName: '',
-        truckLicenseId: '',
-        brand: '',
         // tab切换的值
         workStatus: '00',
         deviceGpsId: '',
         allowableLoad: '', // 应载重量
         allowableVolume: '' // 应载体积
       },
+      addform: {
+        allowableLoad: '',
+        allowableVolume: '',
+        brand: '',
+        deviceGpsId: '',
+        driverName: '',
+        driverNum: '',
+        id: '',
+        licensePlate: '',
+        loadingRatio: '',
+        picture: '',
+        runStatus: '',
+        status: '',
+        transportLineName: '',
+        truckLicenseId: '',
+        truckTypeId: '',
+        truckTypeName: '',
+        workStatus: '00'
+      },
+      // 存放下拉框值的数组
       vehicleTypeList: [],
       counts: [],
       listData: [],
@@ -328,7 +340,7 @@ export default {
     // 弹窗确定按钮
     async btnOk() {
       await this.$refs.addRef.validate()
-      const res = await addTruck(this.formData)
+      const res = await addTruck(this.addform)
       this.$message.success('新增成功')
       this.btnCancel()
       this.getTruck()
@@ -336,7 +348,7 @@ export default {
     },
     // 弹窗取消按钮
     btnCancel() {
-      this.formData = {
+      this.addform = {
         truckTypeId: '',
         licensePlate: '',
         truckTypeName: '',
@@ -344,6 +356,8 @@ export default {
         // tab切换的值
         workStatus: '00'
       }
+      // 清空表单校验报错
+      this.$refs.addRef.resetFields()
       this.isShowDialog = false
     },
     // 启动停用
