@@ -28,6 +28,13 @@ export function enableTruck(id) {
     method: 'put'
   })
 }
+// 停用车辆
+export function disenableTruck(id) {
+  return request({
+    url: `/manager/disable/${id}`,
+    method: 'put'
+  })
+}
 
 // 通过id获取车辆详情
 export function getTruckDetails(id) {

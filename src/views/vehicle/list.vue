@@ -224,7 +224,7 @@
         >注：停用后司机将自动解除绑定</span>
         <span slot="footer" class="dialog-footer">
           <el-button @click="carRunDialog = false">取 消</el-button>
-          <el-button type="primary">确 定</el-button>
+          <el-button type="primary" @click="carBtnOK">确 定</el-button>
         </span>
       </el-dialog>
     </div>
@@ -237,7 +237,7 @@ const titleType = {
   stop: '车辆停用',
   setDriver: '配置司机'
 }
-import { getTruck, searchTruckList, addTruck, enableTruck, configDeiver } from '@/api/modules/vehicle/vehicles'
+import { getTruck, searchTruckList, addTruck, enableTruck, disenableTruck, configDeiver } from '@/api/modules/vehicle/vehicles'
 import { getVehicleList } from '@/api/modules/vehicle/model'
 export default {
   data() {
@@ -402,11 +402,6 @@ export default {
       this.$refs.addRef.resetFields()
       this.isShowDialog = false
     },
-    // 启动停用
-    /* async setWhat(id) {
-      const res = await enableTruck(id)
-      console.log(res)
-    }, */
     // 配置司机
     setWhat(type, id, workStatus) {
       this.carRunDialog = true
@@ -414,6 +409,18 @@ export default {
       this.type = type
       // 在这里判断是停用还是启动
       if (workStatus) this.type = 'stop'
+    },
+    async carBtnOK() {
+      if (this.type === 'run') {
+        this.$message.success('操作成功')
+        await enableTruck(this.id)
+      } else if (this.type === 'stop') {
+        this.$message.success('操作成功')
+        await disenableTruck(this.id)
+      } else {
+        // 配司机
+        await configDeiver(this.id)
+      }
     }
   }
 
