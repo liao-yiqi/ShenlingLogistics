@@ -116,14 +116,14 @@
                 size="mini"
                 type="text"
                 :class="{ blue: row.workStatus==0, red: row.workStatus==1 }"
-                @click="setWhat(row.id, row.workStatus)"
+                @click="setWhat('run', row.id, row.workStatus)"
               >{{ row.workStatus == 0 ? "启用" : "停用" }}</el-button>
               <span style="margin: 0 10px; color: #dcdfe6">|</span>
               <el-button
                 size="mini"
                 style="color: #409eff"
                 type="text"
-                @click="configDeiver(row.id)"
+                @click="setWhat('setDriver', row.id)"
               >配置司机</el-button>
             </template>
           </el-table-column>
@@ -200,15 +200,43 @@
           </el-row>
         </span>
       </el-dialog>
-      <!-- 配置司机提示弹窗 -->
-      <el-dialog :visible="isShowDriverConfig">
-        <div>🔞</div>
+      <!-- 启用弹层 -->
+      <el-dialog :title="title" :visible.sync="carRunDialog" width="35%">
+        <span v-if="type === 'run'">确定要启用吗？车辆启用需满足以下条件：</span>
+        <span v-if="type === 'setDriver'">配置司机需满足以下条件：</span>
+        <span v-if="type === 'stop'">确定要停用吗？车辆停用需满足以下条件：</span>
+        <el-row type="flex">
+          <div>
+            <p v-if="type !== 'stop'" style="margin-right: 40px">
+              1、车辆信息已完善
+            </p>
+            <p v-else style="margin-right: 40px">1、车辆当前无运输任务</p>
+          </div>
+          <div>
+            <p v-if="type === 'run'">2、绑定司机>=2,且有排班</p>
+            <p v-if="type === 'setDriver'">2、车辆无未完成运输任务</p>
+            <p v-if="type === 'stop'">2、车辆无关联运输线路</p>
+          </div>
+        </el-row>
+        <span
+          v-if="type === 'stop'"
+          style="color: #ffb302"
+        >注：停用后司机将自动解除绑定</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="carRunDialog = false">取 消</el-button>
+          <el-button type="primary">确 定</el-button>
+        </span>
       </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
+const titleType = {
+  run: '车辆启用',
+  stop: '车辆停用',
+  setDriver: '配置司机'
+}
 import { getTruck, searchTruckList, addTruck, enableTruck, configDeiver } from '@/api/modules/vehicle/vehicles'
 import { getVehicleList } from '@/api/modules/vehicle/model'
 export default {
@@ -256,7 +284,8 @@ export default {
       },
       total: 0,
       isShowDialog: false,
-      isShowDriverConfig: false,
+      carRunDialog: false,
+      type: '', // 用来判断是启用run  还是停用stop 还是配置司机setDirver
       rules: {
         truckTypeId: [{ required: true, message: '请输入车辆类型' }],
         licensePlate: [{ required: true, message: '请输入车牌号码' }],
@@ -264,7 +293,11 @@ export default {
       }
     }
   },
-
+  computed: {
+    title() {
+      return titleType[this.type]
+    }
+  },
   created() {
     this.getTruck()
     this.getVehicleList()
@@ -370,15 +403,17 @@ export default {
       this.isShowDialog = false
     },
     // 启动停用
-    async setWhat(id) {
+    /* async setWhat(id) {
       const res = await enableTruck(id)
       console.log(res)
-    },
+    }, */
     // 配置司机
-    async configDeiver(id) {
-      const res = await configDeiver(id)
-      console.log(res)
-      this.isShowDriverConfig = true
+    setWhat(type, id, workStatus) {
+      this.carRunDialog = true
+      this.id = id
+      this.type = type
+      // 在这里判断是停用还是启动
+      if (workStatus) this.type = 'stop'
     }
   }
 
